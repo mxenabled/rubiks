@@ -1,5 +1,5 @@
-require "rubiks/version"
+require 'rubiks/version'
 
 module Rubiks
-  # Your code goes here...
+  autoload :Cube, 'rubiks/cube'
 end
