@@ -24,4 +24,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rb-fsevent'
   gem.add_development_dependency 'guard'
   gem.add_development_dependency 'guard-minitest'
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'simplecov-gem-adapter'
 end
