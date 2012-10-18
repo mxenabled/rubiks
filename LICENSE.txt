@@ -1,5 +1,5 @@
 Copyright 2012 MoneyDesktop Inc.
-Copyright Switcheroo contributors https://github.com/moneydesktop/rubiks/contributors
+Copyright Rubiks contributors https://github.com/moneydesktop/rubiks/contributors
 
 MIT License
 

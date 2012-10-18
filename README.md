@@ -1,6 +1,6 @@
 # Rubiks
 
-OLAP Cube layer in Ruby
+A Ruby OLAP Cube layer.
 
 ## Usage
 

@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = Rubiks::VERSION
   gem.authors       = ['JohnnyT']
   gem.email         = ['johnnyt@moneydesktop.com']
-  gem.description   = %q{OLAP Cube layer in Ruby}
+  gem.description   = %q{A Ruby OLAP Cube library}
   gem.summary       = gem.description
   gem.homepage      = 'https://github.com/moneydesktop/rubiks'
 
