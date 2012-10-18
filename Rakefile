@@ -3,6 +3,8 @@ require 'rake'
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
-  t.pattern = 'spec/**/*_spec.rb'
-  t.libs.push 'spec'
+  t.pattern = 'test/**/test_*.rb'
+  t.libs.push 'test'
 end
+
+task :default => :test

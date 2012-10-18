@@ -1,7 +1,9 @@
 module Rubiks
   class Cube
-    def name
-      'Unknown'
+    def dimensions
+    end
+
+    def measures
     end
   end
 end
