@@ -1,0 +1,11 @@
+source 'http://rubygems.org'
+
+gem 'rubiks', :path => '../../'
+
+gem 'activerecord', :require => 'active_record'
+gem 'activerecord-jdbcpostgresql-adapter'
+gem 'awesome_print'
+gem 'jruby-openssl'
+gem 'mondrian-olap'
+gem 'pry'
+gem 'pry-nav'

@@ -1,0 +1,5 @@
+adapter: postgresql
+encoding: utf8
+host: localhost
+username: postgres
+database: finance_development

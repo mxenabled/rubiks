@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# Requires PostgreSQL
+# Setup the finance_development DB
+
+require 'bundler'
+Bundler.require
+
+config = YAML.load_file('./database.yml')
+
+# ActiveRecord::Base.establish_connection(config.merge('database' => 'postgres'))
+# ActiveRecord::Base.connection.create_database(config['database'])
+
+ActiveRecord::Base.establish_connection(config)
+
+# ActiveRecord::Migration.create_table :dim_accounts do |t|
+#   t.string :asset_liability
+#   t.string :account_type
+#   t.string :institution
+# end
+# 
+# ActiveRecord::Migration.create_table :dim_dates do |t|
+#   t.integer :year
+#   t.integer :quarter
+#   t.integer :month
+#   t.integer :day
+# end
+# 
+# ActiveRecord::Migration.create_table :dim_customers do |t|
+#   t.string :name
+#   t.string :gender
+# end
+# 
+# ActiveRecord::Migration.create_table :cube_account_snapshots do |t|
+#   t.references :dim_account
+#   t.references :dim_date
+#   t.references :dim_customer
+#   t.decimal :balance
+# end
+
+require './domain'
+
+account = DimAccount.create(:asset_liability => 'ASSET', :account_type => 'Savings', :institution => 'ACU - Awesome Credit Union')
+customer = DimCustomer.create(:name => 'JohnnyT', :gender => 'Male')
+date = DimDate.create(:year => 2012, :quarter => 4, :month => 11, :day => 31)
+
+CubeAccountSnapshot.create(:dim_account => account, :dim_customer => customer, :dim_date => date, :balance => 100.00)
