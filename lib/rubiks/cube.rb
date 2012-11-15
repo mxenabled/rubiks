@@ -6,12 +6,9 @@ module Rubiks
 
     module ClassMethods
       def dimension(name)
-        model_name = name.to_s.gsub(/^dim_/, '')
-        dim_name = "dim_#{model_name}"
-
-        dimensions << dim_name
-
-        belongs_to model_name, :class_name => dim_name.classify
+        model_name = name.to_s
+        dimensions << model_name
+        belongs_to model_name, :class_name => "Dimensions::#{model_name.classify}"
       end
 
       def dimensions

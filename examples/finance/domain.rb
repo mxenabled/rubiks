@@ -1,40 +1,44 @@
-class DimAccount < ActiveRecord::Base
-  include Rubiks::Dimension
+module Dimensions
+  class Account < ActiveRecord::Base
+    include Rubiks::Dimension
 
-  hierarchy 'Asset/Liability' do
-    level :asset_liability
-    level :account_type
+    hierarchy 'Asset/Liability' do
+      level :asset_liability
+      level :account_type
+    end
+
+    hierarchy 'Institution' do
+      level :institution
+    end
   end
 
-  hierarchy 'Institution' do
-    level :institution
+  class Customer < ActiveRecord::Base
+    include Rubiks::Dimension
+
+    hierarchy 'Gender' do
+      level :gender
+    end
+  end
+
+  class Date < ActiveRecord::Base
+    include Rubiks::Dimension
+
+    hierarchy 'Date' do
+      level :year
+      level :quarter
+      level :month
+    end
   end
 end
 
-class DimCustomer < ActiveRecord::Base
-  include Rubiks::Dimension
+module Facts
+  class AccountSnapshot < ActiveRecord::Base
+    include Rubiks::Fact
 
-  hierarchy 'Gender' do
-    level :gender
+    dimension :account
+    dimension :customer
+    dimension :date
+
+    measure :balance
   end
-end
-
-class DimDate < ActiveRecord::Base
-  include Rubiks::Dimension
-
-  hierarchy 'Date' do
-    level :year
-    level :quarter
-    level :month
-  end
-end
-
-class CubeAccountSnapshot < ActiveRecord::Base
-  include Rubiks::Cube
-
-  dimension :account
-  dimension :customer
-  dimension :date
-
-  measure :balance
 end
