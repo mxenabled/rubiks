@@ -15,13 +15,13 @@ module Rubiks
         if id = cache.read(cache_key)
           klass.find_by_id(id)
 
-        elsif existing_member = klass.where(:natural_key => natural_key).first
+        elsif existing_member = klass.where(natural_key_field => natural_key).first
           cache.write(cache_key, existing_member.id)
           existing_member
 
         else
           new_member = klass.new
-          new_member.natural_key = natural_key
+          new_member[natural_key_field] = natural_key
 
           new_member.save!
           cache.write(cache_key, new_member.id)
@@ -40,13 +40,13 @@ module Rubiks
         if id = cache.read(cache_key)
           id
 
-        elsif existing_member = klass.where(:natural_key => natural_key).first
+        elsif existing_member = klass.where(natural_key_field => natural_key).first
           cache.write(cache_key, existing_member.id)
           existing_member.id
 
         else
           new_member = klass.new
-          new_member.natural_key = natural_key
+          new_member[natural_key_field] = natural_key
 
           new_member.save!
           cache.write(cache_key, new_member.id)
@@ -68,6 +68,26 @@ module Rubiks
         date.strftime('%Y%m%d').to_i
       rescue
         -1
+      end
+
+      def lookup_time(input)
+        date =  if input == :now
+                  Time.now
+                elsif input.kind_of? Integer
+                  Time.at(input)
+                else
+                  Date.parse(input)
+                end
+
+        # 1 HH MM SS 000
+        # 11:59 PM = 1235959000
+        date.strftime('1%H%M%S000').to_i
+      rescue
+        -1
+      end
+
+      def natural_key_field
+        :natural_key
       end
 
       private
