@@ -1,11 +1,19 @@
-module ::Rubiks
-  class Cube < ::Rubiks::ValidatedNode
+require 'rltk'
+require 'rltk/ast'
+
+module ::Rubiks::Nodes
+  class AnnotatedNode < ::Rubiks::Nodes::ValidatedNode
+
     value :name, String
+    value :display_name, String
+    value :abbreviation, String
+    value :abstract, String
+    value :full_description, String
 
     validates :name_present
 
     def name_present
-      errors << 'Name required on Cube' unless self.name.present?
+      errors << "Name required on #{self.class.name.split('::').last}" if self.name.blank?
     end
 
     def from_hash(working_hash)
