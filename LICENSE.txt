@@ -1,4 +1,4 @@
-Copyright 2012 MoneyDesktop Inc.
+Copyright 2013 MoneyDesktop Inc.
 Copyright Rubiks contributors https://github.com/moneydesktop/rubiks/contributors
 
 MIT License

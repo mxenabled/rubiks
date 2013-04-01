@@ -5,7 +5,7 @@ describe ::Rubiks::Cube do
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
 
-  context 'when parsed from a valid set' do
+  context 'when parsed from a valid hash' do
     subject { described_class.new.from_hash('name' => 'fake_cube') }
 
     its(:name) { should eq('fake_cube') }
