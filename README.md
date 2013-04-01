@@ -1,13 +1,14 @@
 # Rubiks
 
-A Ruby OLAP Cube layer.
+Rubiks is a Ruby gem that generates an OLAP schema to XML and JSON.
 
 ## Usage
 
-Add this line to your application's Gemfile:
+Run `gem install rubiks` to install the gem on its own.
+
+Or you can add the following to your Gemfile in the private gems section and run the `bundle` command to install it.
 
     gem 'rubiks'
-
 
 ## Contributing
 

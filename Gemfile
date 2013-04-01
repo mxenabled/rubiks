@@ -1,7 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
-# Specify your gem's dependencies in rubiks.gemspec
+# Take a look at rubiks.gemspec
 gemspec
-
-gem 'yajl-ruby'
-gem 'redis'
