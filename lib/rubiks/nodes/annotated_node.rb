@@ -5,10 +5,6 @@ module ::Rubiks::Nodes
   class AnnotatedNode < ::Rubiks::Nodes::ValidatedNode
 
     value :name, String
-    value :display_name, String
-    value :abbreviation, String
-    value :abstract, String
-    value :full_description, String
 
     validates :name_present
 
