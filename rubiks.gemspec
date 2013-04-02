@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Rubiks::VERSION
   gem.authors       = ['JohnnyT']
   gem.email         = ['johnnyt@moneydesktop.com']
-  gem.description   = %q{A Ruby OLAP Cube library}
-  gem.summary       = gem.description
+  gem.description   = %q{Define an OLAP schema}
+  gem.summary       = 'Rubiks is a Ruby gem that defines an OLAP schema and can output the schema as XML and JSON.'
   gem.homepage      = 'https://github.com/moneydesktop/rubiks'
 
   gem.files         = `git ls-files`.split($/)
@@ -19,12 +19,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'rltk'
   gem.add_dependency 'activesupport'
-
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'rspec-pride'
-  gem.add_development_dependency 'awesome_print'
-  gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'pry-nav'
-  gem.add_development_dependency 'simplecov-gem-adapter'
+  gem.add_dependency 'builder'
 end
