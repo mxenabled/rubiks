@@ -8,10 +8,10 @@ gemspec
 group :test do
   gem 'rake'
   gem 'rspec'
+  gem 'rspec-pride'
 end
 
 group :development do
-  gem 'rspec-pride'
   gem 'awesome_print'
   gem 'pry'
   gem 'pry-nav'
