@@ -47,6 +47,14 @@ module ::Rubiks::Nodes
 
       return hash
     end
+
+    def to_json
+      MultiJson.dump(to_hash)
+    end
+
+    def to_xml
+      to_hash.to_xml(:root => 'Schema')
+    end
   end
 
 end

@@ -15,3 +15,8 @@ Bundler.require(:default, :development, :test)
 require 'rubiks'
 
 require 'support/schema_context'
+require 'support/matchers/be_like'
+
+RSpec.configure do |config|
+  config.include Matchers
+end

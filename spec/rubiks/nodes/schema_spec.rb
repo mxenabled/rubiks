@@ -7,6 +7,8 @@ describe ::Rubiks::Nodes::Schema do
 
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
+  specify { subject.respond_to?(:to_json) }
+  specify { subject.respond_to?(:to_xml) }
   specify { subject.respond_to?(:cubes) }
 
   context 'when parsed from a valid hash' do
@@ -33,6 +35,17 @@ describe ::Rubiks::Nodes::Schema do
     subject { described_class.new_from_hash({}) }
 
     it { should_not be_valid }
+
+    describe '#to_xml' do
+      it 'renders XML' do
+        subject.to_xml.should be_like <<-XML
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Schema>
+        </Schema>
+        XML
+      end
+    end
+
   end
 
 end

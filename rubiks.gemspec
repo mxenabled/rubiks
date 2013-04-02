@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'rltk'
   gem.add_dependency 'activesupport'
+  gem.add_dependency 'builder'
 end

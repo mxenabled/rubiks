@@ -1,4 +1,5 @@
 require 'spec_helper'
+# Mondrian level has: unique_members, column, type, name_column, ordinal_column
 
 describe ::Rubiks::Nodes::Level do
   include_context 'schema_context'
@@ -7,7 +8,6 @@ describe ::Rubiks::Nodes::Level do
 
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
-  specify { subject.respond_to?(:levels) }
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(level_hash) }

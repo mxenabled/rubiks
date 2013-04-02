@@ -1,4 +1,5 @@
 require 'spec_helper'
+# Mondrian level has: has_all, all_member_name, primary_key
 
 describe ::Rubiks::Nodes::Hierarchy do
   include_context 'schema_context'
