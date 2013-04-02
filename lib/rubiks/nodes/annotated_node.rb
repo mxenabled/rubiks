@@ -1,5 +1,4 @@
-require 'rltk'
-require 'rltk/ast'
+require 'rubiks/nodes/validated_node'
 
 module ::Rubiks::Nodes
   class AnnotatedNode < ::Rubiks::Nodes::ValidatedNode
