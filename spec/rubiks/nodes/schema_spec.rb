@@ -12,13 +12,21 @@ describe ::Rubiks::Nodes::Schema do
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(schema_hash) }
 
+    it { should be_valid }
+
+    its(:to_hash) { should have_key('cubes') }
+
     it 'has a cube' do
       subject.cubes.length.should eq 1
     end
 
-    its(:to_hash) { should have_key('cubes') }
+    it 'has a Rubiks::Nodes::Cube' do
+      subject.cubes.first.should be_kind_of(::Rubiks::Nodes::Cube)
+    end
 
-    it { should be_valid }
+    it 'has no values' do
+      subject.values.should eq([])
+    end
   end
 
   context 'when parsed from an invalid (empty) hash' do

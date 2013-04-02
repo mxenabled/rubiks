@@ -9,7 +9,8 @@ shared_context 'schema_context' do
   def cube_hash
     {
       'name' => 'fake_cube',
-      'dimensions' => [dimension_hash.deep_dup]
+      'dimensions' => [dimension_hash.deep_dup],
+      'measures' => [measure_hash.deep_dup]
     }
   end
 
@@ -30,6 +31,12 @@ shared_context 'schema_context' do
   def level_hash
     {
       'name' => 'fake_level'
+    }
+  end
+
+  def measure_hash
+    {
+      'name' => 'fake_measure'
     }
   end
 
