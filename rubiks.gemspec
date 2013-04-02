@@ -19,16 +19,4 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'rltk'
   gem.add_dependency 'activesupport'
-
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'rspec-pride'
-
-  gem.add_development_dependency 'rb-fsevent'
-  gem.add_development_dependency 'guard-rspec'
-
-  gem.add_development_dependency 'awesome_print'
-  gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'pry-nav'
-  gem.add_development_dependency 'simplecov-gem-adapter'
 end
