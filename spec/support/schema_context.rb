@@ -36,7 +36,10 @@ shared_context 'schema_context' do
 
   def measure_hash
     {
-      'name' => 'fake_measure'
+      'name' => 'fake_measure',
+      'column' => 'amount',
+      'aggregator' => 'count',
+      'format_string' => '$#,###'
     }
   end
 
