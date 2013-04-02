@@ -1,6 +1,6 @@
 # Rubiks
 
-Rubiks is a Ruby gem that generates an OLAP schema to XML and JSON.
+Rubiks is a Ruby gem that defines an OLAP schema and can output the schema as XML and JSON.
 
 ## Installation
 
