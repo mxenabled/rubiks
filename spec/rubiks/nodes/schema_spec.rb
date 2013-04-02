@@ -1,19 +1,16 @@
 require 'spec_helper'
 
 describe ::Rubiks::Nodes::Schema do
-  subject { described_class.new([]) }
+  include_context 'schema_context'
 
-  # API
+  subject { described_class.new_from_hash }
+
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
+  specify { subject.respond_to?(:cubes) }
 
   context 'when parsed from a valid hash' do
-    # subject { described_class.new([]).from_hash({}) }
-    subject {
-      described_class.new([]).from_hash({
-        'cubes' => [{'name' => 'fake_cube'}]
-      })
-    }
+    subject { described_class.new_from_hash(schema_hash) }
 
     it 'has a cube' do
       subject.cubes.length.should eq 1
@@ -25,7 +22,7 @@ describe ::Rubiks::Nodes::Schema do
   end
 
   context 'when parsed from an invalid (empty) hash' do
-    subject { described_class.new([]).from_hash({}) }
+    subject { described_class.new_from_hash({}) }
 
     it { should_not be_valid }
   end

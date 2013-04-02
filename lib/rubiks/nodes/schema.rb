@@ -8,6 +8,11 @@ module ::Rubiks::Nodes
 
     validates :cubes_present
 
+    def self.new_from_hash(hash={})
+      new_instance = new([])
+      return new_instance.from_hash(hash)
+    end
+
     def cubes_present
       if self.cubes.present?
         self.cubes.each do |cube|
@@ -31,7 +36,7 @@ module ::Rubiks::Nodes
       return if cubes_array.nil? || cubes_array.empty?
 
       cubes_array.each do |cube_hash|
-        self.cubes << ::Rubiks::Nodes::Cube.new.from_hash(cube_hash)
+        self.cubes << ::Rubiks::Nodes::Cube.new_from_hash(cube_hash)
       end
     end
 

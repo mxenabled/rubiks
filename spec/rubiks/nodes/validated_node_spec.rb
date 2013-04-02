@@ -2,6 +2,10 @@ require 'spec_helper'
 
 class NodeWithValidation < ::Rubiks::Nodes::ValidatedNode
   validates :something
+
+  def something
+    errors << 'Something is required'
+  end
 end
 
 class SubNodeWithValidation < NodeWithValidation
@@ -11,11 +15,20 @@ class NodeWithAdditionalValidation < NodeWithValidation
   validates :something_else
 end
 
+
+
+
 describe NodeWithValidation do
   subject { described_class }
 
   it 'has a validator' do
     subject.validators.length.should eq 1
+  end
+
+  context 'when parsed from an invalid (empty) hash' do
+    subject { described_class.new }
+
+    it { should_not be_valid }
   end
 end
 

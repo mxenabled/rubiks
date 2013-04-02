@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe ::Rubiks::Nodes::Cube do
+describe ::Rubiks::Nodes::Hierarchy do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }
 
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
-  specify { subject.respond_to?(:dimensions) }
+  specify { subject.respond_to?(:levels) }
 
   context 'when parsed from a valid hash' do
-    subject { described_class.new_from_hash(cube_hash) }
+    subject { described_class.new_from_hash(hierarchy_hash) }
 
-    its(:to_hash) { should have_key('name') }
+    its(:to_hash) { should have_key('levels') }
 
     it { should be_valid }
   end
