@@ -1,7 +1,7 @@
 require 'rltk'
 require 'rltk/ast'
 
-module ::Rubiks::Nodes
+module ::Rubiks
   class ValidatedNode < ::RLTK::ASTNode
 
     class << self

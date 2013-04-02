@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# describe ::Rubiks::Nodes::AnnotatedNode do
+# describe ::Rubiks::AnnotatedNode do
 #   # API
 #   specify { subject.respond_to?(:from_hash) }
 #   specify { subject.respond_to?(:to_hash) }

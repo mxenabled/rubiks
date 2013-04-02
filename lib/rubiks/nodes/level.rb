@@ -1,9 +1,9 @@
 require 'rubiks/nodes/validated_node'
 require 'rubiks/nodes/hierarchy'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Level < ::Rubiks::Nodes::AnnotatedNode
+  class Level < ::Rubiks::AnnotatedNode
     def self.new_from_hash(hash={})
       new_instance = new
       return new_instance.from_hash(hash)

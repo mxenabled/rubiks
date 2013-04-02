@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ::Rubiks::Nodes::Cube do
+describe ::Rubiks::Cube do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }
@@ -17,12 +17,12 @@ describe ::Rubiks::Nodes::Cube do
 
     its(:to_hash) { should have_key('name') }
 
-    it 'has a Rubiks::Nodes::Dimension' do
-      subject.dimensions.first.should be_kind_of(::Rubiks::Nodes::Dimension)
+    it 'has a Rubiks::Dimension' do
+      subject.dimensions.first.should be_kind_of(::Rubiks::Dimension)
     end
 
-    it 'has a Rubiks::Nodes::Measure' do
-      subject.measures.first.should be_kind_of(::Rubiks::Nodes::Measure)
+    it 'has a Rubiks::Measure' do
+      subject.measures.first.should be_kind_of(::Rubiks::Measure)
     end
 
     it 'has one value' do

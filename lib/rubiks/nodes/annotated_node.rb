@@ -1,7 +1,7 @@
 require 'rubiks/nodes/validated_node'
 
-module ::Rubiks::Nodes
-  class AnnotatedNode < ::Rubiks::Nodes::ValidatedNode
+module ::Rubiks
+  class AnnotatedNode < ::Rubiks::ValidatedNode
     value :name, String
 
     validates :name_present

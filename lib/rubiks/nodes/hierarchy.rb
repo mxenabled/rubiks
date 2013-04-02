@@ -1,10 +1,10 @@
 require 'rubiks/nodes/annotated_node'
 require 'rubiks/nodes/level'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Hierarchy < ::Rubiks::Nodes::AnnotatedNode
-    child :levels, [::Rubiks::Nodes::Level]
+  class Hierarchy < ::Rubiks::AnnotatedNode
+    child :levels, [::Rubiks::Level]
 
     validates :levels_present
 
@@ -37,7 +37,7 @@ module ::Rubiks::Nodes
       return if levels_array.nil? || levels_array.empty?
 
       levels_array.each do |level_hash|
-        self.levels << ::Rubiks::Nodes::Level.new_from_hash(level_hash)
+        self.levels << ::Rubiks::Level.new_from_hash(level_hash)
       end
     end
 

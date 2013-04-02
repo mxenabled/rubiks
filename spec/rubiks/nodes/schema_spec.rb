@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ::Rubiks::Nodes::Schema do
+describe ::Rubiks::Schema do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }
@@ -22,8 +22,8 @@ describe ::Rubiks::Nodes::Schema do
       subject.cubes.length.should eq 1
     end
 
-    it 'has a Rubiks::Nodes::Cube' do
-      subject.cubes.first.should be_kind_of(::Rubiks::Nodes::Cube)
+    it 'has a Rubiks::Cube' do
+      subject.cubes.first.should be_kind_of(::Rubiks::Cube)
     end
 
     it 'has no values' do

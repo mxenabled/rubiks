@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ::Rubiks::Nodes::Measure do
+describe ::Rubiks::Measure do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }

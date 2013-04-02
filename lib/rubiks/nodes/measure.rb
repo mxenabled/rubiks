@@ -1,8 +1,8 @@
 require 'rubiks/nodes/validated_node'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Measure < ::Rubiks::Nodes::AnnotatedNode
+  class Measure < ::Rubiks::AnnotatedNode
     value :column, String
     value :aggregator, String
     value :format_string, String

@@ -1,10 +1,10 @@
 require 'rubiks/nodes/validated_node'
 require 'rubiks/nodes/cube'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Schema < ::Rubiks::Nodes::ValidatedNode
-    child :cubes, [::Rubiks::Nodes::Cube]
+  class Schema < ::Rubiks::ValidatedNode
+    child :cubes, [::Rubiks::Cube]
 
     validates :cubes_present
 
@@ -36,7 +36,7 @@ module ::Rubiks::Nodes
       return if cubes_array.nil? || cubes_array.empty?
 
       cubes_array.each do |cube_hash|
-        self.cubes << ::Rubiks::Nodes::Cube.new_from_hash(cube_hash)
+        self.cubes << ::Rubiks::Cube.new_from_hash(cube_hash)
       end
     end
 

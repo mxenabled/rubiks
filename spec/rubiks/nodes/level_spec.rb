@@ -1,7 +1,7 @@
 require 'spec_helper'
 # Mondrian level has: unique_members, column, type, name_column, ordinal_column
 
-describe ::Rubiks::Nodes::Level do
+describe ::Rubiks::Level do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }

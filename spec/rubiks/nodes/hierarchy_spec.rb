@@ -1,7 +1,7 @@
 require 'spec_helper'
 # Mondrian level has: has_all, all_member_name, primary_key
 
-describe ::Rubiks::Nodes::Hierarchy do
+describe ::Rubiks::Hierarchy do
   include_context 'schema_context'
 
   subject { described_class.new_from_hash }

@@ -1,10 +1,10 @@
 require 'rubiks/nodes/validated_node'
 require 'rubiks/nodes/hierarchy'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Dimension < ::Rubiks::Nodes::AnnotatedNode
-    child :hierarchies, [::Rubiks::Nodes::Hierarchy]
+  class Dimension < ::Rubiks::AnnotatedNode
+    child :hierarchies, [::Rubiks::Hierarchy]
 
     validates :hierarchies_present
 
@@ -37,7 +37,7 @@ module ::Rubiks::Nodes
       return if hierarchies_array.nil? || hierarchies_array.empty?
 
       hierarchies_array.each do |hierarchy_hash|
-        self.hierarchies << ::Rubiks::Nodes::Hierarchy.new_from_hash(hierarchy_hash)
+        self.hierarchies << ::Rubiks::Hierarchy.new_from_hash(hierarchy_hash)
       end
     end
 

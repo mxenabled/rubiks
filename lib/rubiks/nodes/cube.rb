@@ -2,11 +2,11 @@ require 'rubiks/nodes/annotated_node'
 require 'rubiks/nodes/dimension'
 require 'rubiks/nodes/measure'
 
-module ::Rubiks::Nodes
+module ::Rubiks
 
-  class Cube < ::Rubiks::Nodes::AnnotatedNode
-    child :dimensions, [::Rubiks::Nodes::Dimension]
-    child :measures, [::Rubiks::Nodes::Measure]
+  class Cube < ::Rubiks::AnnotatedNode
+    child :dimensions, [::Rubiks::Dimension]
+    child :measures, [::Rubiks::Measure]
 
     validates :dimensions_present, :measures_present
 
@@ -40,7 +40,7 @@ module ::Rubiks::Nodes
       return if measures_array.nil? || measures_array.empty?
 
       measures_array.each do |measure_hash|
-        self.measures << ::Rubiks::Nodes::Measure.new_from_hash(measure_hash)
+        self.measures << ::Rubiks::Measure.new_from_hash(measure_hash)
       end
     end
 
@@ -59,7 +59,7 @@ module ::Rubiks::Nodes
       return if dimensions_array.nil? || dimensions_array.empty?
 
       dimensions_array.each do |dimension_hash|
-        self.dimensions << ::Rubiks::Nodes::Dimension.new_from_hash(dimension_hash)
+        self.dimensions << ::Rubiks::Dimension.new_from_hash(dimension_hash)
       end
     end
 

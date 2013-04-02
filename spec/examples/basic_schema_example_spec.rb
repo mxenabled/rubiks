@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Basic Schema' do
-  let(:described_class) { ::Rubiks::Nodes::Schema }
+  let(:described_class) { ::Rubiks::Schema }
   let(:schema_hash) {
     {
       'cubes' => [{

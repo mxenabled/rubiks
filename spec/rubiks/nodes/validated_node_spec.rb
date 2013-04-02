@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-class NodeWithValidation < ::Rubiks::Nodes::ValidatedNode
+class NodeWithValidation < ::Rubiks::ValidatedNode
   validates :something
 
   def something
