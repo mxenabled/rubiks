@@ -1,7 +1,7 @@
 require 'rltk'
 require 'rltk/ast'
 
-module ::Rubiks
+module ::Rubiks::Nodes
   class ValidatedNode < ::RLTK::ASTNode
 
     class << self
@@ -22,7 +22,9 @@ module ::Rubiks
 
     def self.inherited(klass)
       super
-      klass.validators = []
+      klass.validators = self.validators.nil? ?
+                          [] :
+                          self.validators.dup
     end
 
     def errors
