@@ -2,11 +2,11 @@
 
 Rubiks is a Ruby gem that generates an OLAP schema to XML and JSON.
 
-## Usage
+## Installation
 
 Run `gem install rubiks` to install the gem on its own.
 
-Or you can add the following to your Gemfile in the private gems section and run the `bundle` command to install it.
+Or you can add the following to your Gemfile and run the `bundle` command to install it.
 
     gem 'rubiks'
 

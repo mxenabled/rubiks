@@ -22,11 +22,10 @@ end
 describe SubNodeWithValidation do
   subject { described_class }
 
-  it 'has a validator (inherited)' do
+  it 'inherits the validator of the super class' do
     subject.validators.length.should eq 1
   end
 end
-
 
 describe NodeWithAdditionalValidation do
   subject { described_class }
@@ -35,26 +34,3 @@ describe NodeWithAdditionalValidation do
     subject.validators.length.should eq 2
   end
 end
-
-
-# 
-#   its(:validators) { should }
-# 
-# describe ::Rubiks::Nodes::ValidatedNode do
-#   context 'when subclassed' do
-#     subject { ::Rubiks::ValidatedNodeSpec::NodeWithAdditionalValidation }
-# 
-#     its(:name) { should eq('some_name') }
-# 
-#     its(:to_hash) { should have_key('name') }
-# 
-#     it { should be_valid }
-#   end
-# 
-#   context 'when parsed from an invalid (empty) hash' do
-#     subject { described_class.new.from_hash({}) }
-# 
-#     it { should_not be_valid }
-#   end
-# 
-# end
