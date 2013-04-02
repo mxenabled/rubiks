@@ -1,3 +1,5 @@
+require 'rubiks/nodes/annotated_node'
+
 module ::Rubiks::Nodes
 
   class Cube < ::Rubiks::Nodes::AnnotatedNode

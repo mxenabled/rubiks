@@ -1,3 +1,6 @@
+require 'rubiks/nodes/validated_node'
+require 'rubiks/nodes/cube'
+
 module ::Rubiks::Nodes
 
   class Schema < ::Rubiks::Nodes::ValidatedNode
