@@ -1,5 +1,7 @@
 # Rubiks
 
+[![Build Status](https://secure.travis-ci.org/moneydesktop/rubiks.png?branch=master)](https://travis-ci.org/moneydesktop/rubiks)
+
 Rubiks is a Ruby gem that defines an OLAP schema and can output the schema as XML and JSON.
 
 ## Installation
