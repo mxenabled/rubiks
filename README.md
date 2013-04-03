@@ -1,8 +1,9 @@
 # Rubiks
 
 [![Build Status](https://secure.travis-ci.org/moneydesktop/rubiks.png?branch=master)](https://travis-ci.org/moneydesktop/rubiks)
+[![Code Climate](https://codeclimate.com/github/moneydesktop/rubiks.png)](https://codeclimate.com/github/moneydesktop/rubiks)
 
-Rubiks is a Ruby gem that defines an OLAP schema and can output the schema as XML and JSON.
+Rubiks is a Ruby gem that defines an OLAP schema with `#to_xml` to generate a Mondrian XML schema and `#to_json` for everything else.
 
 ## Installation
 
