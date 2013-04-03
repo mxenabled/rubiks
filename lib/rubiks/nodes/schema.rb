@@ -1,5 +1,6 @@
 require 'rubiks/nodes/validated_node'
 require 'rubiks/nodes/cube'
+require 'multi_json'
 
 module ::Rubiks
 
