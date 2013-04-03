@@ -1,5 +1,4 @@
 require 'rubiks/nodes/annotated_node'
-require 'rubiks/nodes/hierarchy'
 
 module ::Rubiks
 
