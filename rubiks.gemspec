@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Rubiks::VERSION
   gem.authors       = ['JohnnyT']
   gem.email         = ['johnnyt@moneydesktop.com']
-  gem.description   = %q{Define an OLAP schema}
-  gem.summary       = 'Rubiks is a Ruby gem that defines an OLAP schema and can output the schema as XML and JSON.'
+  gem.description   = 'Rubiks lets you define an OLAP schema then generate a Mondrian XML or JSON file.'
+  gem.summary       = gem.description
   gem.homepage      = 'https://github.com/moneydesktop/rubiks'
 
   gem.files         = `git ls-files`.split($/)
@@ -20,4 +20,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rltk'
   gem.add_dependency 'activesupport'
   gem.add_dependency 'builder'
+
+  # Check the Gemfile for test and development dependencies
 end
