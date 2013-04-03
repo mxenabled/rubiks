@@ -46,6 +46,14 @@ describe ::Rubiks::Schema do
       end
     end
 
+    describe '#to_json' do
+      it 'renders JSON' do
+        subject.to_json.should be_like <<-JSON
+        {}
+        JSON
+      end
+    end
+
   end
 
 end
