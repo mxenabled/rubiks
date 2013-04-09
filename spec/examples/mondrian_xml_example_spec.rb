@@ -20,8 +20,6 @@ require 'spec_helper'
 #     </dimension>
 #
 #     <measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
-#     <measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
-#     <measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
 #
 #     <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
 #       <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
@@ -40,16 +38,6 @@ describe 'A basic Mondrian XML Schema' do
             'name' => 'unit_sales',
             'aggregator' => 'sum',
             'format_string' => '#,###'
-          },
-          {
-            'name' => 'store_sales',
-            'aggregator' => 'sum',
-            'format_string' => '#,###.##'
-          },
-          {
-            'name' => 'store_cost',
-            'aggregator' => 'sum',
-            'format_string' => '#,###.00'
           }
         ],
         'dimensions' => [
@@ -72,6 +60,14 @@ describe 'A basic Mondrian XML Schema' do
                 }
               ]
             }]
+          }
+        ],
+        'calculated_members' => [
+          {
+            'name' => 'Profit',
+            'dimension' => 'Measures',
+            'formula' => '[Measures].[Store Sales] - [Measures].[Store Cost]',
+            'format_string' => '$#,##0.00'
           }
         ]
       }]
@@ -99,8 +95,6 @@ describe 'A basic Mondrian XML Schema' do
           </dimension>
 
           <measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
-          <measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
-          <measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
 
           <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
             <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>

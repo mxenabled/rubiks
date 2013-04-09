@@ -1,5 +1,4 @@
 require 'spec_helper'
-# Mondrian level has: unique_members, column, type, name_column, ordinal_column
 
 describe ::Rubiks::Level do
   include_context 'schema_context'
@@ -16,9 +15,6 @@ describe ::Rubiks::Level do
 
     it { should be_valid }
 
-#         <Level name="Year" column="year" type="Numeric" uniqueMembers="true"/>
-#         <Level name="Quarter" column="quarter" uniqueMembers="false"/>
-#         <Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
     describe '#to_xml' do
       it 'renders a level tag with attributes' do
         subject.to_xml.should be_like <<-XML

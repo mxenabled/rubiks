@@ -10,7 +10,8 @@ shared_context 'schema_context' do
     {
       'name' => 'fake_cube',
       'dimensions' => [dimension_hash.deep_dup],
-      'measures' => [measure_hash.deep_dup]
+      'measures' => [measure_hash.deep_dup],
+      'calculated_members' => [calculated_member_hash.deep_dup]
     }
   end
 
@@ -40,6 +41,15 @@ shared_context 'schema_context' do
       'name' => 'fake_measure',
       'aggregator' => 'sum',
       'format_string' => '$#,###'
+    }
+  end
+
+  def calculated_member_hash
+    {
+      'name' => 'fake_calculated_member',
+      'dimension' => 'fake_dimension',
+      'formula' => 'fake_formula',
+      'format_string' => '$#,##0.00'
     }
   end
 

@@ -18,7 +18,7 @@ describe ::Rubiks::Dimension do
 
     describe '#to_xml' do
       it 'renders a dimension tag with attributes' do
-        subject.to_xml.should include(%Q!<dimension name="#{subject.name}" foreignKey="#{subject.name}_id">!)
+        subject.to_xml.should include(%Q!<dimension name="Fake Dimension" foreignKey="fake_dimension_id">!)
       end
     end
   end
