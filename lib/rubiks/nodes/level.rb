@@ -4,10 +4,12 @@ module ::Rubiks
 
   class Level < ::Rubiks::AnnotatedNode
     EDITOR_TYPES = %w[ RANGE DISCRETE ]
+    DATA_TYPES = %w[ String Integer Numeric Boolean Date\ Time Timestamp ]
 
     value :editor_type, String
+    value :data_type, String
 
-    validates :editor_type_if_present
+    validates :editor_type_if_present, :data_type_if_present
 
     def self.new_from_hash(hash={})
       new_instance = new
@@ -19,8 +21,21 @@ module ::Rubiks
       working_hash.stringify_keys!
 
       parse_name(working_hash.delete('name'))
+      parse_data_type(working_hash.delete('data_type'))
       parse_editor_type(working_hash.delete('editor_type'))
       return self
+    end
+
+    def data_type_if_present
+      if self.data_type.present? && !::Rubiks::Level::DATA_TYPES.include?(self.data_type)
+        errors << "DataType '#{self.data_type}' must be one of #{::Rubiks::Level::DATA_TYPES.join(', ')}"
+      end
+    end
+
+    def parse_data_type(data_type_value)
+      return if data_type_value.nil?
+
+      self.data_type = data_type_value.to_s
     end
 
     def editor_type_if_present
@@ -35,7 +50,6 @@ module ::Rubiks
       self.editor_type = editor_type_value.to_s
     end
 
-
     def to_hash
       hash = {}
 
@@ -44,6 +58,7 @@ module ::Rubiks
         hash['display_name'] = self.display_name
       end
       hash['editor_type'] = self.editor_type if self.editor_type.present?
+      hash['data_type'] = self.data_type if self.data_type.present?
 
       return hash
     end
@@ -57,6 +72,7 @@ module ::Rubiks
         attrs['name'] = self.display_name
         attrs['column'] = self.name
       end
+      attrs['type'] = self.data_type if self.data_type.present?
 
       builder.level(attrs)
     end
