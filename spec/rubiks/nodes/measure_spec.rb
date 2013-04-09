@@ -20,12 +20,28 @@ describe ::Rubiks::Measure do
     its(:to_hash) { should have_key('column') }
     its(:to_hash) { should have_key('aggregator') }
     its(:to_hash) { should have_key('format_string') }
+
+    describe '#to_xml' do
+      it 'renders a measure tag with attributes' do
+        subject.to_xml.should be_like <<-XML
+        <measure name="#{subject.name}" column="#{subject.column}" aggregator="#{subject.aggregator}" formatString="#{subject.format_string}"/>
+        XML
+      end
+    end
   end
 
   context 'when parsed from an invalid (empty) hash' do
     subject { described_class.new_from_hash({}) }
 
     it { should_not be_valid }
-  end
 
+#     <Measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
+    describe '#to_xml' do
+      it 'renders a measure tag' do
+        subject.to_xml.should be_like <<-XML
+        <measure/>
+        XML
+      end
+    end
+  end
 end

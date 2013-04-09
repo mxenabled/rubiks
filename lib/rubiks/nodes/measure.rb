@@ -66,7 +66,10 @@ module ::Rubiks
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
       attrs = self.to_hash
-      builder.measure('name' => attrs['name'])
+      attrs.keys.each do |key|
+        attrs[key.camelize(:lower)] = attrs.delete(key)
+      end
+      builder.measure(attrs)
     end
   end
 
