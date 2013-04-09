@@ -28,7 +28,7 @@ module ::Rubiks
       return self
     end
 
-    def calculated_members_present
+    def calculated_members_if_present
       if self.calculated_members.present?
         self.calculated_members.each do |calculated_member|
           calculated_member.validate

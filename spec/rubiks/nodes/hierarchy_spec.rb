@@ -20,7 +20,7 @@ describe ::Rubiks::Hierarchy do
 
     describe '#to_xml' do
       it 'renders a hierarchy tag with attributes' do
-        subject.to_xml.should include(%Q!<hierarchy name="Fake Hierarchy" primaryKey="id">!)
+        subject.to_xml.should include(%Q!<hierarchy name="Fake Hierarchy" primaryKey="id" hasAll="true">!)
       end
 
       it 'renders a table tag with attributes' do
@@ -37,7 +37,7 @@ describe ::Rubiks::Hierarchy do
     describe '#to_xml' do
       it 'renders a hierarchy and table tag' do
         subject.to_xml.should be_like <<-XML
-        <hierarchy primaryKey="id">
+        <hierarchy primaryKey="id" hasAll="true">
         <table/>
         </hierarchy>
         XML

@@ -69,6 +69,7 @@ module ::Rubiks
       attrs = Hash.new
       attrs['name'] = self.name.titleize if self.name.present?
       attrs['primaryKey'] = 'id'
+      attrs['hasAll'] = 'true'
 
       builder.hierarchy(attrs) {
         table_attrs = Hash.new

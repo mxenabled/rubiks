@@ -1,17 +1,17 @@
-require 'rubiks/nodes/validated_node'
+require 'rubiks/nodes/annotated_node'
 require 'rubiks/nodes/cube'
 require 'multi_json'
 require 'builder'
 
 module ::Rubiks
 
-  class Schema < ::Rubiks::ValidatedNode
+  class Schema < ::Rubiks::AnnotatedNode
     child :cubes, [::Rubiks::Cube]
 
     validates :cubes_present
 
     def self.new_from_hash(hash={})
-      new_instance = new([])
+      new_instance = new('',[])
       return new_instance.from_hash(hash)
     end
 
@@ -30,6 +30,8 @@ module ::Rubiks
       return self if working_hash.nil?
       working_hash.stringify_keys!
 
+      parse_name(working_hash.delete('name'))
+      self.name = 'default' if self.name.blank?
       parse_cubes(working_hash.delete('cubes'))
       return self
     end
@@ -45,17 +47,10 @@ module ::Rubiks
     def to_hash
       hash = {}
 
+      hash['name'] = self.name if self.name.present?
       hash['cubes'] = self.cubes.map(&:to_hash) if self.cubes.present?
 
       return hash
-    end
-
-    def to_json
-      MultiJson.dump(to_hash)
-    end
-
-    def to_xml
-      to_hash.to_xml(:root => 'Schema')
     end
 
     def to_xml(builder = nil)
@@ -63,7 +58,10 @@ module ::Rubiks
 
       builder.instruct!
 
-      builder.schema {
+      attrs = self.to_hash
+      attrs.delete('cubes')
+
+      builder.schema(attrs) {
         self.cubes.each do |cube|
           cube.to_xml(builder)
         end

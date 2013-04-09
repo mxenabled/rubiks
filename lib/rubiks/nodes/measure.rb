@@ -26,9 +26,9 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name.to_s if self.name.present?
-      hash['aggregator'] = self.aggregator.to_s if self.aggregator.present?
-      hash['format_string'] = self.format_string.to_s if self.format_string.present?
+      hash['name'] = self.name if self.name.present?
+      hash['aggregator'] = self.aggregator if self.aggregator.present?
+      hash['format_string'] = self.format_string if self.format_string.present?
 
       return hash
     end
@@ -54,7 +54,7 @@ module ::Rubiks
 
       attrs = Hash.new
       attrs['name'] = self.name.titleize if self.name.present?
-      attrs['column'] = self.name if self.name.present?
+      attrs['column'] = self.name.underscore if self.name.present?
       attrs.reverse_merge!(self.to_hash)
       attrs.keys.each do |key|
         attrs[key.camelize(:lower)] = attrs.delete(key)

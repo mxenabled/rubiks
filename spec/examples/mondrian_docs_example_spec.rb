@@ -6,12 +6,12 @@ require 'spec_helper'
 #
 # We want the output to be:
 #
-# <schema>
+# <schema name="default">
 #   <cube name="Sales">
 #     <table name="view_sales"/>
 #
 #     <dimension name="Date" foreignKey="date_id">
-#       <hierarchy name="Year Quarter Month" hasAll="false" primaryKey="id">
+#       <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
 #         <table name="view_dates"/>
 #         <level name="Year" column="year"/>
 #         <level name="Quarter" column="quarter"/>
@@ -27,7 +27,7 @@ require 'spec_helper'
 #   </cube>
 # </schema>
 
-describe 'A basic Mondrian XML Schema' do
+describe 'A Mondrian XML Schema' do
   let(:described_class) { ::Rubiks::Schema }
   let(:schema_hash) {
     {
@@ -81,12 +81,12 @@ describe 'A basic Mondrian XML Schema' do
       subject.to_xml.should be_like <<-XML
       <?xml version="1.0" encoding="UTF-8"?>
 
-      <schema>
+      <schema name="default">
         <cube name="Sales">
           <table name="view_sales"/>
 
           <dimension name="Date" foreignKey="date_id">
-            <hierarchy name="Year Quarter Month" primaryKey="id">
+            <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
               <table name="view_dates"/>
               <level name="Year" column="year"/>
               <level name="Quarter" column="quarter"/>

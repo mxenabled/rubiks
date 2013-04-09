@@ -17,18 +17,6 @@ describe ::Rubiks::Schema do
     it { should be_valid }
 
     its(:to_hash) { should have_key('cubes') }
-
-    it 'has a cube' do
-      subject.cubes.length.should eq 1
-    end
-
-    it 'has a Rubiks::Cube' do
-      subject.cubes.first.should be_kind_of(::Rubiks::Cube)
-    end
-
-    it 'has no values' do
-      subject.values.should eq([])
-    end
   end
 
   context 'when parsed from an invalid (empty) hash' do
@@ -40,20 +28,11 @@ describe ::Rubiks::Schema do
       it 'renders XML' do
         subject.to_xml.should be_like <<-XML
         <?xml version="1.0" encoding="UTF-8"?>
-        <schema>
+        <schema name="default">
         </schema>
         XML
       end
     end
-
-    describe '#to_json' do
-      it 'renders JSON' do
-        subject.to_json.should be_like <<-JSON
-        {}
-        JSON
-      end
-    end
-
   end
 
 end
