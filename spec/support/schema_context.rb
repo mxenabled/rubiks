@@ -33,8 +33,8 @@ shared_context 'schema_context' do
   def level_hash
     {
       'name' => 'fake_level',
-      'data_type' => 'Numeric',
-      'editor_type' => 'RANGE'
+      'data_type' => 'numeric',
+      'cardinality' => 'normal'
     }
   end
 

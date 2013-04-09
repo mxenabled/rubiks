@@ -3,13 +3,13 @@ require 'rubiks/nodes/annotated_node'
 module ::Rubiks
 
   class Level < ::Rubiks::AnnotatedNode
-    EDITOR_TYPES = %w[ RANGE DISCRETE ]
-    DATA_TYPES = %w[ String Integer Numeric Boolean Date\ Time Timestamp ]
+    CARDINALITIES = %w[ low normal high ]
+    DATA_TYPES = %w[ string integer numeric boolean date_time timestamp ]
 
-    value :editor_type, String
+    value :cardinality, String
     value :data_type, String
 
-    validates :editor_type_if_present, :data_type_if_present
+    validates :cardinality_if_present, :data_type_if_present
 
     def self.new_from_hash(hash={})
       new_instance = new
@@ -22,13 +22,13 @@ module ::Rubiks
 
       parse_name(working_hash.delete('name'))
       parse_data_type(working_hash.delete('data_type'))
-      parse_editor_type(working_hash.delete('editor_type'))
+      parse_cardinality(working_hash.delete('cardinality'))
       return self
     end
 
     def data_type_if_present
-      if self.data_type.present? && !::Rubiks::Level::DATA_TYPES.include?(self.data_type)
-        errors << "DataType '#{self.data_type}' must be one of #{::Rubiks::Level::DATA_TYPES.join(', ')}"
+      if self.data_type.present? && !::Rubiks::Level::DATA_TYPES.include?(self.data_type.to_s.underscore)
+        errors << "DataType '#{self.data_type}' must be one of #{::Rubiks::Level::DATA_TYPES.join(', ')} on Level"
       end
     end
 
@@ -38,16 +38,16 @@ module ::Rubiks
       self.data_type = data_type_value.to_s
     end
 
-    def editor_type_if_present
-      if self.editor_type.present? && !::Rubiks::Level::EDITOR_TYPES.include?(self.editor_type)
-        errors << "EditorType '#{self.editor_type}' must be one of #{::Rubiks::Level::EDITOR_TYPES.join(', ')}"
+    def cardinality_if_present
+      if self.cardinality.present? && !::Rubiks::Level::CARDINALITIES.include?(self.cardinality)
+        errors << "Cardinality '#{self.cardinality}' must be one of #{::Rubiks::Level::CARDINALITIES.join(', ')} on Level"
       end
     end
 
-    def parse_editor_type(editor_type_value)
-      return if editor_type_value.nil?
+    def parse_cardinality(cardinality_value)
+      return if cardinality_value.nil?
 
-      self.editor_type = editor_type_value.to_s
+      self.cardinality = cardinality_value.to_s
     end
 
     def to_hash
@@ -57,7 +57,7 @@ module ::Rubiks
         hash['name'] = self.name.to_s
         hash['display_name'] = self.display_name
       end
-      hash['editor_type'] = self.editor_type if self.editor_type.present?
+      hash['cardinality'] = self.cardinality if self.cardinality.present?
       hash['data_type'] = self.data_type if self.data_type.present?
 
       return hash
