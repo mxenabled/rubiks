@@ -3,11 +3,10 @@ require 'rubiks/nodes/validated_node'
 module ::Rubiks
 
   class Measure < ::Rubiks::AnnotatedNode
-    value :column, String
     value :aggregator, String
     value :format_string, String
 
-    validates :column_present, :aggregator_present
+    validates :aggregator_present
 
     def self.new_from_hash(hash={})
       new_instance = new
@@ -19,7 +18,6 @@ module ::Rubiks
       working_hash.stringify_keys!
 
       parse_name(working_hash.delete('name'))
-      parse_column(working_hash.delete('column'))
       parse_aggregator(working_hash.delete('aggregator'))
       parse_format_string(working_hash.delete('format_string'))
       return self
@@ -29,21 +27,10 @@ module ::Rubiks
       hash = {}
 
       hash['name'] = self.name.to_s if self.name.present?
-      hash['column'] = self.column.to_s if self.column.present?
       hash['aggregator'] = self.aggregator.to_s if self.aggregator.present?
       hash['format_string'] = self.format_string.to_s if self.format_string.present?
 
       return hash
-    end
-
-    def column_present
-      errors << 'Column required on Measure' if self.column.blank?
-    end
-
-    def parse_column(column_value)
-      return if column_value.nil?
-
-      self.column = column_value.to_s
     end
 
     def aggregator_present
@@ -65,7 +52,10 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
-      attrs = self.to_hash
+      attrs = Hash.new
+      attrs['name'] = self.name.titleize if self.name.present?
+      attrs['column'] = self.name if self.name.present?
+      attrs.reverse_merge!(self.to_hash)
       attrs.keys.each do |key|
         attrs[key.camelize(:lower)] = attrs.delete(key)
       end

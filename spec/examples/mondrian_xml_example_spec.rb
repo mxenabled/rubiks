@@ -2,39 +2,32 @@ require 'spec_helper'
 
 # This example is taken from the Mondrian documentation:
 # http://mondrian.pentaho.com/documentation/schema.php#Cubes_and_dimensions
-# and then modified to use Rails/Rubiks conventions
+# then modified to use Rails/Rubiks conventions
 #
 # We want the output to be:
 #
-# <Schema>
-#   <Cube name="Sales">
-#     <Table name="view_sales"/>
+# <schema>
+#   <cube name="Sales">
+#     <table name="view_sales"/>
 #
-#     <Dimension name="Gender" foreignKey="customer_id">
-#       <Hierarchy hasAll="true" allMemberName="All Genders" primaryKey="id">
-#         <Table name="customers"/>
-#         <Level name="Gender" column="gender" uniqueMembers="true"/>
-#       </Hierarchy>
-#     </Dimension>
+#     <dimension name="Date" foreignKey="date_id">
+#       <hierarchy name="Year Quarter Month" hasAll="false" primaryKey="id">
+#         <table name="view_dates"/>
+#         <level name="Year" column="year"/>
+#         <level name="Quarter" column="quarter"/>
+#         <level name="Month" column="month"/>
+#       </hierarchy>
+#     </dimension>
 #
-#     <Dimension name="Date" foreignKey="date_id">
-#       <Hierarchy hasAll="false" primaryKey="id">
-#         <Table name="view_dates"/>
-#         <Level name="Year" column="year" type="Numeric" uniqueMembers="true"/>
-#         <Level name="Quarter" column="quarter" uniqueMembers="false"/>
-#         <Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
-#       </Hierarchy>
-#     </Dimension>
+#     <measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
+#     <measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
+#     <measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
 #
-#     <Measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
-#     <Measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
-#     <Measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
-#
-#     <CalculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
-#       <CalculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
-#     </CalculatedMember>
-#   </Cube>
-# </Schema>
+#     <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
+#       <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
+#     </calculatedMember>
+#   </cube>
+# </schema>
 
 describe 'A basic Mondrian XML Schema' do
   let(:described_class) { ::Rubiks::Schema }
@@ -45,14 +38,17 @@ describe 'A basic Mondrian XML Schema' do
         'measures' => [
           {
             'name' => 'unit_sales',
+            'aggregator' => 'sum',
             'format_string' => '#,###'
           },
           {
             'name' => 'store_sales',
+            'aggregator' => 'sum',
             'format_string' => '#,###.##'
           },
           {
             'name' => 'store_cost',
+            'aggregator' => 'sum',
             'format_string' => '#,###.00'
           }
         ],
@@ -64,14 +60,15 @@ describe 'A basic Mondrian XML Schema' do
               'levels' => [
                 {
                   'name' => 'year',
-                  'type' => 'numeric',
-                  'unique_members' => true
+                  'type' => 'numeric'
                 },
                 {
-                  'name' => 'quarter'
+                  'name' => 'quarter',
+                  'type' => 'string'
                 },
                 {
-                  'name' => 'month'
+                  'name' => 'month',
+                  'type' => 'numeric'
                 }
               ]
             }]
@@ -88,50 +85,27 @@ describe 'A basic Mondrian XML Schema' do
       subject.to_xml.should be_like <<-XML
       <?xml version="1.0" encoding="UTF-8"?>
 
-      <Schema>
-        <Cube name="Sales">
-          <Table name="view_sales"/>
-
-          <Dimension name="Gender" foreignKey="customer_id">
-            <Hierarchy hasAll="true" allMemberName="All Genders" primaryKey="id">
-              <Table name="customers"/>
-              <Level name="Gender" column="gender" uniqueMembers="true"/>
-            </Hierarchy>
-          </Dimension>
-
-          <Dimension name="Date" foreignKey="date_id">
-            <Hierarchy hasAll="false" primaryKey="id">
-              <Table name="view_dates"/>
-              <Level name="Year" column="year" type="Numeric" uniqueMembers="true"/>
-              <Level name="Quarter" column="quarter" uniqueMembers="false"/>
-              <Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
-            </Hierarchy>
-          </Dimension>
-
-          <Measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
-          <Measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
-          <Measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
-
-          <CalculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
-            <CalculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
-          </CalculatedMember>
-        </Cube>
-      </Schema>
-
-
       <schema>
-      <cube name="sales">
-        <table name="view_sales"/>
+        <cube name="Sales">
+          <table name="view_sales"/>
 
-        <Dimension name="Date" foreignKey="date_id">
-          <Hierarchy hasAll="false" primaryKey="id">
-            <Table name="view_dates"/>
-            <Level name="Year" column="year" type="Numeric" uniqueMembers="true"/>
-            <Level name="Quarter" column="quarter" uniqueMembers="false"/>
-            <Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
-          </Hierarchy>
-        </Dimension>
-      </cube>
+          <dimension name="Date" foreignKey="date_id">
+            <hierarchy name="Year Quarter Month" primaryKey="id">
+              <table name="view_dates"/>
+              <level name="Year" column="year"/>
+              <level name="Quarter" column="quarter"/>
+              <level name="Month" column="month"/>
+            </hierarchy>
+          </dimension>
+
+          <measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
+          <measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
+          <measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
+
+          <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
+            <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
+          </calculatedMember>
+        </cube>
       </schema>
       XML
     end

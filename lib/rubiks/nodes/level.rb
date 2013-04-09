@@ -23,6 +23,16 @@ module ::Rubiks
 
       return hash
     end
+
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      attrs = Hash.new
+      attrs['name'] = self.name.titleize if self.name.present?
+      attrs['column'] = self.name.underscore if self.name.present?
+
+      builder.level(attrs)
+    end
   end
 
 end

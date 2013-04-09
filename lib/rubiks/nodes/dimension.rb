@@ -37,6 +37,7 @@ module ::Rubiks
       return if hierarchies_array.nil? || hierarchies_array.empty?
 
       hierarchies_array.each do |hierarchy_hash|
+        hierarchy_hash['dimension'] = self.name if self.name.present?
         self.hierarchies << ::Rubiks::Hierarchy.new_from_hash(hierarchy_hash)
       end
     end
@@ -50,11 +51,24 @@ module ::Rubiks
       return hash
     end
 
+#     <Dimension name="Date" foreignKey="date_id">
+#       <Hierarchy hasAll="false" primaryKey="id">
+#         <Table name="view_dates"/>
+#         <Level name="Year" column="year" type="Numeric" uniqueMembers="true"/>
+#         <Level name="Quarter" column="quarter" uniqueMembers="false"/>
+#         <Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
+#       </Hierarchy>
+#     </Dimension>
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
       attrs = self.to_hash
-      builder.dimension('name' => attrs['name'], 'foreignKey' => "#{attrs['name']}_id") {
+      attrs.delete('hierarchies')
+      attrs.keys.each do |key|
+        attrs[key.camelize(:lower)] = attrs.delete(key)
+      end
+      attrs['foreignKey'] = "#{self.name}_id" if self.name.present?
+      builder.dimension(attrs) {
         self.hierarchies.each do |hier|
           hier.to_xml(builder)
         end if self.hierarchies.present?

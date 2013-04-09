@@ -7,7 +7,6 @@ describe ::Rubiks::Measure do
 
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
-  specify { subject.respond_to?(:column) }
   specify { subject.respond_to?(:aggregator) }
   specify { subject.respond_to?(:format_string) }
 
@@ -17,14 +16,13 @@ describe ::Rubiks::Measure do
     it { should be_valid }
 
     its(:to_hash) { should have_key('name') }
-    its(:to_hash) { should have_key('column') }
     its(:to_hash) { should have_key('aggregator') }
     its(:to_hash) { should have_key('format_string') }
 
     describe '#to_xml' do
       it 'renders a measure tag with attributes' do
         subject.to_xml.should be_like <<-XML
-        <measure name="#{subject.name}" column="#{subject.column}" aggregator="#{subject.aggregator}" formatString="#{subject.format_string}"/>
+        <measure name="Fake Measure" column="fake_measure" aggregator="sum" formatString="#{subject.format_string}"/>
         XML
       end
     end
@@ -35,7 +33,6 @@ describe ::Rubiks::Measure do
 
     it { should_not be_valid }
 
-#     <Measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
     describe '#to_xml' do
       it 'renders a measure tag' do
         subject.to_xml.should be_like <<-XML

@@ -24,6 +24,7 @@ shared_context 'schema_context' do
   def hierarchy_hash
     {
       'name' => 'fake_hierarchy',
+      'dimension' => 'fake_dimension',
       'levels' => [level_hash.deep_dup]
     }
   end
@@ -37,8 +38,7 @@ shared_context 'schema_context' do
   def measure_hash
     {
       'name' => 'fake_measure',
-      'column' => 'amount',
-      'aggregator' => 'count',
+      'aggregator' => 'sum',
       'format_string' => '$#,###'
     }
   end

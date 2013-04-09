@@ -40,8 +40,8 @@ describe ::Rubiks::Schema do
       it 'renders XML' do
         subject.to_xml.should be_like <<-XML
         <?xml version="1.0" encoding="UTF-8"?>
-        <Schema>
-        </Schema>
+        <schema>
+        </schema>
         XML
       end
     end
