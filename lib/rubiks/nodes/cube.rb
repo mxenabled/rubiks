@@ -72,6 +72,18 @@ module ::Rubiks
 
       return hash
     end
+
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      attrs = self.to_hash
+      builder.cube('name' => attrs['name']) {
+        builder.table('name' => "view_#{attrs['name']}")
+
+        self.dimensions.each{ |dim| dim.to_xml(builder) } if self.dimensions.present?
+        self.measures.each{ |measure| measure.to_xml(builder) } if self.measures.present?
+      }
+    end
   end
 
 end

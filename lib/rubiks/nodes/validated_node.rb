@@ -2,6 +2,38 @@ require 'rltk'
 require 'rltk/ast'
 
 module ::Rubiks
+
+  # == Rubiks ValidatedNode
+  #
+  # Provides a basic validation framework to ASTNodes.
+  #
+  # A minimal implementation could be:
+  #
+  #  class NamedNode < ::Rubiks::ValidatedNode
+  #    name :name, String
+  #
+  #    validates :name_present
+  #
+  #    def name_present
+  #      errors << "Name required on NamedNode" if self.name.blank?
+  #    end
+  #
+  #    def parse_name(name_value)
+  #      return if name_value.nil?
+  #
+  #      self.name = name_value.to_s
+  #    end
+  #  end
+  #
+  # Which provides you with the following behavior:
+  #
+  #   name_node = nameNode.new
+  #   name_node.valid?           # => false
+  #   name_node.errors           # => ["Name required on NamedNode"]
+  #
+  #   name_node.name = 7
+  #   name_node.valid?           # => true
+  #
   class ValidatedNode < ::RLTK::ASTNode
 
     class << self

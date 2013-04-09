@@ -49,6 +49,17 @@ module ::Rubiks
 
       return hash
     end
+
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      attrs = self.to_hash
+      builder.dimension('name' => attrs['name'], 'foreignKey' => "#{attrs['name']}_id") {
+        self.hierarchies.each do |hier|
+          hier.to_xml(builder)
+        end if self.hierarchies.present?
+      }
+    end
   end
 
 end

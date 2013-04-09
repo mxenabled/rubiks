@@ -61,6 +61,13 @@ module ::Rubiks
 
       self.format_string = format_string_value.to_s
     end
+
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      attrs = self.to_hash
+      builder.measure('name' => attrs['name'])
+    end
   end
 
 end

@@ -1,6 +1,7 @@
 require 'rubiks/nodes/validated_node'
 require 'rubiks/nodes/cube'
 require 'multi_json'
+require 'builder'
 
 module ::Rubiks
 
@@ -55,6 +56,18 @@ module ::Rubiks
 
     def to_xml
       to_hash.to_xml(:root => 'Schema')
+    end
+
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      builder.instruct!
+
+      builder.schema {
+        self.cubes.each do |cube|
+          cube.to_xml(builder)
+        end
+      }
     end
   end
 

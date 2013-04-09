@@ -50,6 +50,14 @@ module ::Rubiks
       return hash
     end
 
+    def to_xml(builder = nil)
+      builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
+
+      attrs = self.to_hash
+      builder.hierarchy('name' => attrs['name'], 'hasAll' => true, 'primaryKey' => 'id') {
+        builder.table('name' => 'ASDF')
+      }
+    end
   end
 
 end
