@@ -34,7 +34,8 @@ shared_context 'schema_context' do
     {
       'name' => 'fake_level',
       'data_type' => 'numeric',
-      'cardinality' => 'normal'
+      'cardinality' => 'normal',
+      'contiguous' => true
     }
   end
 

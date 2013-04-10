@@ -7,6 +7,8 @@ module ::Rubiks
     DATA_TYPES = %w[ string integer numeric boolean date_time timestamp ]
 
     value :cardinality, String
+    value :contiguous_value, Fixnum
+    value :sort_column, String
     value :data_type, String
 
     validates :cardinality_if_present, :data_type_if_present
@@ -22,8 +24,27 @@ module ::Rubiks
 
       parse_name(working_hash.delete('name'))
       parse_data_type(working_hash.delete('data_type'))
+      parse_contiguous_value(working_hash.delete('contiguous'))
       parse_cardinality(working_hash.delete('cardinality'))
+      parse_sort_column(working_hash.delete('sort'))
       return self
+    end
+
+    def parse_contiguous_value(input_value)
+      return if input_value.nil?
+
+      self.contiguous_value = !!input_value ? 1 : 0
+    end
+
+    def parse_sort_column(sort_column_value)
+      return if sort_column_value.nil?
+
+      if sort_column_value.kind_of?(::TrueClass)
+        self.sort_column = "#{self.name}_sort"
+
+      elsif sort_column_value.kind_of?(::String)
+        self.sort_column = sort_column_value
+      end
     end
 
     def data_type_if_present
@@ -57,6 +78,7 @@ module ::Rubiks
         hash['name'] = self.name.to_s
         hash['display_name'] = self.display_name
       end
+      hash['contiguous'] = true if self.contiguous_value.present? && self.contiguous_value == 1
       hash['cardinality'] = self.cardinality if self.cardinality.present?
       hash['data_type'] = self.data_type if self.data_type.present?
 
@@ -73,6 +95,7 @@ module ::Rubiks
         attrs['column'] = self.name
       end
       attrs['type'] = self.data_type if self.data_type.present?
+      attrs['ordinalColumn'] = self.sort_column if self.sort_column.present?
 
       builder.level(attrs)
     end

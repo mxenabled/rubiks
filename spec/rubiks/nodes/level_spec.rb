@@ -14,6 +14,7 @@ describe ::Rubiks::Level do
     its(:to_hash) { should have_key('name') }
     its(:to_hash) { should have_key('data_type') }
     its(:to_hash) { should have_key('cardinality') }
+    its(:to_hash) { should have_key('contiguous') }
 
     it { should be_valid }
 
@@ -40,6 +41,26 @@ describe ::Rubiks::Level do
     end
   end
 
+  context 'when parsed with true sort value' do
+    subject { described_class.new_from_hash({'sort' => true}) }
+
+    describe '#to_xml' do
+      it 'has a ordinalColumn' do
+        subject.to_xml.should include('ordinalColumn')
+      end
+    end
+  end
+
+  context 'when parsed with sort column' do
+    subject { described_class.new_from_hash({'sort' => 'fake_level_sort'}) }
+
+    describe '#to_xml' do
+      it 'has a ordinalColumn' do
+        subject.to_xml.should include('ordinalColumn')
+      end
+    end
+  end
+
   context 'when parsed from an invalid (empty) hash' do
     subject { described_class.new_from_hash({}) }
 
@@ -56,6 +77,11 @@ describe ::Rubiks::Level do
 
   context 'when parsed with an invalid cardinality' do
     subject { described_class.new_from_hash({'cardinality' => 'foo'}) }
+    it { should_not be_valid }
+  end
+
+  context 'when parsed with an invalid contiguous value' do
+    subject { described_class.new_from_hash({'contiguous' => 'foo'}) }
     it { should_not be_valid }
   end
 
