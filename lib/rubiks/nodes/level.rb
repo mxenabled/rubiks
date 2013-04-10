@@ -10,6 +10,8 @@ module ::Rubiks
     value :contiguous_value, Fixnum
     value :sort_column, String
     value :data_type, String
+    value :column, String
+    value :name_column, String
 
     validates :cardinality_if_present, :data_type_if_present
 
@@ -23,6 +25,8 @@ module ::Rubiks
       working_hash.stringify_keys!
 
       parse_name(working_hash.delete('name'))
+      parse_name_column(working_hash.delete('name_column'))
+      parse_column(working_hash.delete('column'))
       parse_data_type(working_hash.delete('data_type'))
       parse_contiguous_value(working_hash.delete('contiguous'))
       parse_cardinality(working_hash.delete('cardinality'))
@@ -30,6 +34,18 @@ module ::Rubiks
       parse_sort_column(working_hash.delete('sorted'))
       parse_sort_column(working_hash.delete('sort_column'))
       return self
+    end
+
+    def parse_column(input_value)
+      return if input_value.nil?
+
+      self.column = input_value.to_s
+    end
+
+    def parse_name_column(input_value)
+      return if input_value.nil?
+
+      self.name_column = input_value.to_s
     end
 
     def parse_contiguous_value(input_value)
@@ -84,6 +100,12 @@ module ::Rubiks
       hash['cardinality'] = self.cardinality if self.cardinality.present?
       hash['data_type'] = self.data_type if self.data_type.present?
 
+      if self.column.present?
+        hash['column'] = self.column
+      elsif self.name.present?
+        hash['column'] = self.name
+      end
+
       return hash
     end
 
@@ -94,10 +116,11 @@ module ::Rubiks
 
       if self.name.present?
         attrs['name'] = self.display_name
-        attrs['column'] = self.name
+        attrs['column'] = self.column || self.name
       end
       attrs['type'] = self.data_type if self.data_type.present?
       attrs['ordinalColumn'] = self.sort_column if self.sort_column.present?
+      attrs['nameColumn'] = self.name_column if self.name_column.present?
 
       builder.level(attrs)
     end
