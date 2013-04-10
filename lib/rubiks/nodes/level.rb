@@ -4,7 +4,7 @@ module ::Rubiks
 
   class Level < ::Rubiks::AnnotatedNode
     CARDINALITIES = %w[ low normal high ]
-    DATA_TYPES = %w[ string integer numeric boolean date_time timestamp ]
+    DATA_TYPES = %w[ String Integer Numeric Boolean Date Time Timestamp ]
 
     value :cardinality, String
     value :contiguous_value, Fixnum
@@ -27,6 +27,7 @@ module ::Rubiks
       parse_contiguous_value(working_hash.delete('contiguous'))
       parse_cardinality(working_hash.delete('cardinality'))
       parse_sort_column(working_hash.delete('sort'))
+      parse_sort_column(working_hash.delete('sort_column'))
       return self
     end
 
@@ -48,7 +49,7 @@ module ::Rubiks
     end
 
     def data_type_if_present
-      if self.data_type.present? && !::Rubiks::Level::DATA_TYPES.include?(self.data_type.to_s.underscore)
+      if self.data_type.present? && !::Rubiks::Level::DATA_TYPES.include?(self.data_type)
         errors << "DataType '#{self.data_type}' must be one of #{::Rubiks::Level::DATA_TYPES.join(', ')} on Level"
       end
     end
@@ -56,7 +57,7 @@ module ::Rubiks
     def parse_data_type(data_type_value)
       return if data_type_value.nil?
 
-      self.data_type = data_type_value.to_s
+      self.data_type = data_type_value.to_s.capitalize
     end
 
     def cardinality_if_present

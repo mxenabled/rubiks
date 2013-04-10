@@ -30,12 +30,12 @@ describe ::Rubiks::Level do
       end
 
       it 'includes the type' do
-        subject.to_xml.should include('type="numeric"')
+        subject.to_xml.should include('type="Numeric"')
       end
 
       it 'renders a level tag with attributes' do
         subject.to_xml.should be_like <<-XML
-        <level name="Fake Level" column="fake_level" type="numeric"/>
+        <level name="Fake Level" column="fake_level" type="Numeric"/>
         XML
       end
     end
