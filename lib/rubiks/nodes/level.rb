@@ -27,6 +27,7 @@ module ::Rubiks
       parse_contiguous_value(working_hash.delete('contiguous'))
       parse_cardinality(working_hash.delete('cardinality'))
       parse_sort_column(working_hash.delete('sort'))
+      parse_sort_column(working_hash.delete('sorted'))
       parse_sort_column(working_hash.delete('sort_column'))
       return self
     end
