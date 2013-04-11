@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Rubiks::VERSION
   gem.authors       = ['JohnnyT']
   gem.email         = ['johnnyt@moneydesktop.com']
-  gem.description   = 'Rubiks lets you define an OLAP schema then generate a Mondrian XML or JSON file.'
-  gem.summary       = gem.description
+  gem.summary       = %q{A gem to provide translation of OLAP schemas}
+  gem.description   = %q{A gem to allow defining an OLAP schema from a hash and generate an XML schema for Mondrian}
   gem.homepage      = 'https://github.com/moneydesktop/rubiks'
 
   gem.files         = `git ls-files`.split($/)
