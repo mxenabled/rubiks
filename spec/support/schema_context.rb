@@ -32,7 +32,10 @@ shared_context 'schema_context' do
 
   def level_hash
     {
-      'name' => 'fake_level'
+      'name' => 'fake_level',
+      'data_type' => 'numeric',
+      'cardinality' => 'normal',
+      'contiguous' => true
     }
   end
 

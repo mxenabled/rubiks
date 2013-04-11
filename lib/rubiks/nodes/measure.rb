@@ -4,6 +4,7 @@ module ::Rubiks
 
   class Measure < ::Rubiks::AnnotatedNode
     value :aggregator, String
+    value :column, String
     value :format_string, String
 
     validates :aggregator_present
@@ -18,6 +19,7 @@ module ::Rubiks
       working_hash.stringify_keys!
 
       parse_name(working_hash.delete('name'))
+      parse_column(working_hash.delete('column'))
       parse_aggregator(working_hash.delete('aggregator'))
       parse_format_string(working_hash.delete('format_string'))
       return self
@@ -29,12 +31,21 @@ module ::Rubiks
       hash['name'] = self.name if self.name.present?
       hash['aggregator'] = self.aggregator if self.aggregator.present?
       hash['format_string'] = self.format_string if self.format_string.present?
+      hash['column'] = self.column if self.column.present?
 
       return hash
     end
 
     def aggregator_present
       errors << 'Aggregator required on Measure' if self.aggregator.blank?
+    end
+
+    def parse_column(column_value)
+      return if column_value.nil? && self.name.blank?
+
+      self.column = column_value.nil? ?
+                      self.name.underscore :
+                      column_value.to_s
     end
 
     def parse_aggregator(aggregator_value)
@@ -52,10 +63,8 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
-      attrs = Hash.new
-      attrs['name'] = self.name.titleize if self.name.present?
-      attrs['column'] = self.name.underscore if self.name.present?
-      attrs.reverse_merge!(self.to_hash)
+      attrs = self.to_hash
+      attrs['name'] = self.display_name if self.name.present?
       attrs.keys.each do |key|
         attrs[key.camelize(:lower)] = attrs.delete(key)
       end

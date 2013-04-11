@@ -94,7 +94,7 @@ describe 'A Mondrian XML Schema' do
             </hierarchy>
           </dimension>
 
-          <measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
+          <measure name="Unit Sales" aggregator="sum" formatString="#,###" column="unit_sales"/>
 
           <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
             <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
