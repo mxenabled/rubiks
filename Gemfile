@@ -11,6 +11,7 @@ group :test do
   gem 'coveralls', :require => false
   gem 'simplecov', :require => false
   gem 'rspec'
+  gem 'rspec-pride'
 end
 
 group :development do
