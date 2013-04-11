@@ -25,6 +25,26 @@ describe ::Rubiks::Cube do
     end
   end
 
+  context 'when parsed with date_dimension' do
+    subject { described_class.new_from_hash({'date_dimension' => 'Date'}) }
+    its(:to_hash) { should have_key('date_dimension') }
+  end
+
+  context 'when parsed with person_dimension' do
+    subject { described_class.new_from_hash({'person_dimension' => 'Date'}) }
+    its(:to_hash) { should have_key('person_dimension') }
+  end
+
+  context 'when parsed with count_measure' do
+    subject { described_class.new_from_hash({'count_measure' => 'Count'}) }
+    its(:to_hash) { should have_key('count_measure') }
+  end
+
+  context 'when parsed with person_count_measure' do
+    subject { described_class.new_from_hash({'person_count_measure' => 'Count'}) }
+    its(:to_hash) { should have_key('person_count_measure') }
+  end
+
   context 'when parsed from an invalid (empty) hash' do
     subject { described_class.new_from_hash({}) }
 

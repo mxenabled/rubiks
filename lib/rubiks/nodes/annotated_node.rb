@@ -16,5 +16,11 @@ module ::Rubiks
       self.name = name_value.to_s
     end
 
+    def display_name
+      return if self.name.nil?
+
+      self.name.titleize
+    end
+
   end
 end

@@ -7,8 +7,6 @@ describe ::Rubiks::Measure do
 
   specify { subject.respond_to?(:from_hash) }
   specify { subject.respond_to?(:to_hash) }
-  specify { subject.respond_to?(:aggregator) }
-  specify { subject.respond_to?(:format_string) }
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(measure_hash) }
@@ -22,7 +20,20 @@ describe ::Rubiks::Measure do
     describe '#to_xml' do
       it 'renders a measure tag with attributes' do
         subject.to_xml.should be_like <<-XML
-        <measure name="Fake Measure" column="fake_measure" aggregator="sum" formatString="#{subject.format_string}"/>
+        <measure name="Fake Measure" aggregator="sum" formatString="#{subject.format_string}" column="fake_measure"/>
+        XML
+      end
+    end
+  end
+
+  context 'when parsed with a specific column' do
+    #subject { described_class.new_from_hash(measure_hash.merge('column' => 'foo')) }
+    subject { described_class.new_from_hash('column' => 'foo') }
+
+    describe '#to_xml' do
+      it 'includes the specific column' do
+        subject.to_xml.should be_like <<-XML
+        <measure column="foo"/>
         XML
       end
     end

@@ -5,17 +5,24 @@ module ::Rubiks
 
   class Hierarchy < ::Rubiks::AnnotatedNode
     value :dimension, String
+    value :table, String
     child :levels, [::Rubiks::Level]
 
     validates :levels_present, :dimension_present
 
     def self.new_from_hash(hash={})
-      new_instance = new('','',[])
+      new_instance = new('','','',[])
       return new_instance.from_hash(hash)
     end
 
     def dimension_present
       errors << 'Dimension required on Hierarchy' if self.dimension.blank?
+    end
+
+    def parse_table(input_value)
+      return if input_value.nil?
+
+      self.table = input_value.to_s
     end
 
     def parse_dimension(dimension_value)
@@ -40,6 +47,7 @@ module ::Rubiks
       working_hash.stringify_keys!
 
       parse_name(working_hash.delete('name'))
+      parse_table(working_hash.delete('table'))
       parse_dimension(working_hash.delete('dimension'))
       parse_levels(working_hash.delete('levels'))
       return self
@@ -57,6 +65,7 @@ module ::Rubiks
       hash = {}
 
       hash['name'] = self.name.to_s if self.name.present?
+      hash['table'] = self.table.to_s if self.table.present?
       hash['dimension'] = self.dimension.to_s if self.dimension.present?
       hash['levels'] = self.levels.map(&:to_hash) if self.levels.present?
 
@@ -73,7 +82,12 @@ module ::Rubiks
 
       builder.hierarchy(attrs) {
         table_attrs = Hash.new
-        table_attrs['name'] = "view_#{dimension.tableize}" if dimension.present?
+        if self.table.present?
+          table_attrs['name'] = self.table
+        elsif self.dimension.present?
+          table_attrs['name'] = "view_#{dimension.tableize}"
+        end
+
         builder.table(table_attrs)
 
         self.levels.each do |level|

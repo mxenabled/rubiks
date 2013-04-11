@@ -74,7 +74,7 @@ describe 'A simple Mondrian XML Schema' do
                 <level name="Month" column="month"/>
               </hierarchy>
             </dimension>
-            <measure name="Amount" column="amount" aggregator="sum" formatString="$#,###"/>
+            <measure name="Amount" aggregator="sum" formatString="$#,###" column="amount"/>
           </cube>
         </schema>
       XML

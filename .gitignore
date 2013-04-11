@@ -1,20 +1,35 @@
-*.gem
-*.rbc
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
 *.swp
-.DS_Store
-.bundle
-.config
-.vagrant
+
+## PROJECT::GENERAL
 .yardoc
-Gemfile.lock
-InstalledFiles
-_yardoc
 coverage
-doc/
-lib/bundler/man
+doc
+log
 pkg
 rdoc
-spec/reports
-test/tmp
-test/version_tmp
-tmp
+
+## BUNDLER
+*.gem
+.bundle
+pkg
+Gemfile.lock
+
+## RBENV
+.ruby-version
+.rbenv*
+
+## RCOV
+coverage.data
+
+## RUBINIUS
+*.rbc
