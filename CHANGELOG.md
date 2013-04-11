@@ -1,3 +1,7 @@
+0.0.5
+-----
+* [0.0.5 release](https://github.com/moneydesktop/rubiks/pull/2)
+
 0.0.4
 -----
 * [Bump to v0.0.4](https://github.com/moneydesktop/rubiks/commit/38dfd1f82e947f39457670adfdc6ca67da2728c6)
