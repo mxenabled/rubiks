@@ -7,6 +7,7 @@ gemspec
 # so CI can include just test dependencies
 group :test do
   gem 'rake'
+  gem 'yard'
   gem 'coveralls', :require => false
   gem 'simplecov', :require => false
   gem 'rspec'
@@ -17,5 +18,4 @@ group :development do
   gem 'kramdown'
   gem 'pry'
   gem 'pry-nav'
-  gem 'yard'
 end
