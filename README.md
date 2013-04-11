@@ -31,7 +31,7 @@ After installing the gem, fire up an IRB session with `irb` or `bundle exec irb`
 ```ruby
 require 'rubiks/examples'
 
-md = Rubiks::Examples::MondrianDocs.new
+md = Rubiks::Examples::MondrianDocs
 
 md.filename           # => "/path/to/rubiks/examples/mondrian_docs.yml"
 
