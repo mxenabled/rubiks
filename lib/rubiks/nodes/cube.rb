@@ -19,7 +19,7 @@ module ::Rubiks
 
     def self.new_from_hash(hash={})
       new_instance = new('','','','','',[],[],[])
-      return new_instance.from_hash(hash)
+      return new_instance.from_hash(hash.deep_dup)
     end
 
     def from_hash(working_hash)
