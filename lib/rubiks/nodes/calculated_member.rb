@@ -1,4 +1,4 @@
-require 'rubiks/nodes/validated_node'
+require 'rubiks/nodes/annotated_node'
 
 module ::Rubiks
 
