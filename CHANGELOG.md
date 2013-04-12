@@ -1,3 +1,8 @@
+0.0.6
+-----
+* [0.0.6 release](https://github.com/moneydesktop/rubiks/pull/3)
+* [Nodes deep_dup the input hash in .new_from_hash](https://github.com/moneydesktop/rubiks/commit/81b2d68eddf5551abd0f360aee4c91d237e10c3c)
+
 0.0.5
 -----
 * [0.0.5 release](https://github.com/moneydesktop/rubiks/pull/2)
