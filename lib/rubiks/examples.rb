@@ -36,7 +36,7 @@ module ::Rubiks
     class MondrianDocs
       class << self
         def filename
-          File.expand_path('../../../examples/mondrian_docs.yml', __FILE__)
+          File.expand_path('../../../spec/support/examples/mondrian_docs.yml', __FILE__)
         end
 
         def file_contents
