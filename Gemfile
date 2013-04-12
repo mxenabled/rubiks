@@ -18,5 +18,5 @@ group :development do
   gem 'awesome_print'
   gem 'kramdown'
   gem 'pry'
-  gem 'pry-nav'
+  gem 'pry-debugger'
 end
