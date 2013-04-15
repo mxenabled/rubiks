@@ -45,7 +45,10 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name.to_s if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['hierarchies'] = self.hierarchies.map(&:to_hash) if self.hierarchies.present?
 
       return hash
@@ -56,6 +59,7 @@ module ::Rubiks
 
       attrs = self.to_hash
       attrs.delete('hierarchies')
+      attrs.delete('display_name')
       attrs['name'] = self.name.titleize if self.name.present?
       attrs.keys.each do |key|
         attrs[key.camelize(:lower)] = attrs.delete(key)

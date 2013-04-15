@@ -61,10 +61,19 @@ module ::Rubiks
       end
     end
 
+    def json_hash
+      hash = self.to_hash
+      hash.delete('dimension')
+      return hash
+    end
+
     def to_hash
       hash = {}
 
-      hash['name'] = self.name.to_s if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['table'] = self.table.to_s if self.table.present?
       hash['dimension'] = self.dimension.to_s if self.dimension.present?
       hash['levels'] = self.levels.map(&:to_hash) if self.levels.present?

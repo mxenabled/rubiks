@@ -12,6 +12,7 @@ require 'rspec'
 require 'pry-debugger' if ENV['DEBUG']
 
 require 'support/schema_context'
+require 'support/shared_examples'
 require 'support/matchers/be_like'
 
 RSpec.configure do |config|

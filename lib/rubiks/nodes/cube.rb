@@ -119,7 +119,10 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name.to_s if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['dimensions'] = self.dimensions.map(&:to_hash) if self.dimensions.present?
       hash['measures'] = self.measures.map(&:to_hash) if self.measures.present?
       hash['calculated_members'] = self.calculated_members.map(&:to_hash) if self.calculated_members.present?

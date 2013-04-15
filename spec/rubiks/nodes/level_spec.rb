@@ -5,18 +5,18 @@ describe ::Rubiks::Level do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(level_hash) }
 
-    its(:to_hash) { should have_key('name') }
     its(:to_hash) { should have_key('data_type') }
     its(:to_hash) { should have_key('cardinality') }
     its(:to_hash) { should have_key('contiguous') }
 
     it { should be_valid }
+    it_behaves_like 'a valid annotated node'
 
     describe '#to_json' do
       it 'includes the cardinality' do

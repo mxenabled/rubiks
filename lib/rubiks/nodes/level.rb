@@ -109,6 +109,13 @@ module ::Rubiks
       return hash
     end
 
+    def json_hash
+      hash = self.to_hash
+      hash.delete('column')
+      hash.delete('data_type')
+      hash
+    end
+
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
@@ -123,10 +130,6 @@ module ::Rubiks
       attrs['nameColumn'] = self.name_column if self.name_column.present?
 
       builder.level(attrs)
-    end
-
-    def to_json
-      MultiJson.dump(self.to_hash)
     end
   end
 

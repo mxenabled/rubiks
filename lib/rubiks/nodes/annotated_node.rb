@@ -1,4 +1,6 @@
 require 'rubiks/nodes/validated_node'
+require 'multi_json'
+require 'builder'
 
 module ::Rubiks
   class AnnotatedNode < ::Rubiks::ValidatedNode
@@ -20,6 +22,15 @@ module ::Rubiks
       return if self.name.nil?
 
       self.name.titleize
+    end
+
+    # Override this in subclasses if needed
+    def json_hash
+      self.to_hash
+    end
+
+    def to_json
+      MultiJson.encode(self.json_hash)
     end
 
   end

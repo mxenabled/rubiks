@@ -28,11 +28,20 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['aggregator'] = self.aggregator if self.aggregator.present?
       hash['format_string'] = self.format_string if self.format_string.present?
       hash['column'] = self.column if self.column.present?
 
+      return hash
+    end
+
+    def json_hash
+      hash = self.to_hash
+      hash.delete('column')
       return hash
     end
 
@@ -65,6 +74,7 @@ module ::Rubiks
 
       attrs = self.to_hash
       attrs['name'] = self.display_name if self.name.present?
+      attrs.delete('display_name')
       attrs.keys.each do |key|
         attrs[key.camelize(:lower)] = attrs.delete(key)
       end

@@ -5,8 +5,9 @@ describe ::Rubiks::CalculatedMember do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
+
   specify { subject.respond_to?(:dimension) }
   specify { subject.respond_to?(:formula) }
   specify { subject.respond_to?(:format_string) }
@@ -16,11 +17,11 @@ describe ::Rubiks::CalculatedMember do
 
     it { should be_valid }
 
-    its(:to_hash) { should have_key('name') }
-    its(:to_hash) { should have_key('dimension') }
-    its(:to_hash) { should have_key('formula') }
-    its(:to_hash) { should have_key('format_string') }
+    it_behaves_like 'a valid annotated node'
 
+    %w[ dimension formula format_string ].each do |required_key|
+      its(:to_hash) { should have_key(required_key) }
+    end
 
     describe '#to_xml' do
       it 'renders a calculatedMember tag with attributes' do

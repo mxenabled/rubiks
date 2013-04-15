@@ -1,7 +1,5 @@
 require 'rubiks/nodes/annotated_node'
 require 'rubiks/nodes/cube'
-require 'multi_json'
-require 'builder'
 
 module ::Rubiks
 
@@ -47,7 +45,10 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['cubes'] = self.cubes.map(&:to_hash) if self.cubes.present?
 
       return hash
@@ -60,6 +61,7 @@ module ::Rubiks
 
       attrs = self.to_hash
       attrs.delete('cubes')
+      attrs.delete('display_name')
 
       builder.schema(attrs) {
         self.cubes.each do |cube|

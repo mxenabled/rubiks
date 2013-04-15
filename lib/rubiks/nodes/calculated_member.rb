@@ -28,7 +28,10 @@ module ::Rubiks
     def to_hash
       hash = {}
 
-      hash['name'] = self.name.to_s if self.name.present?
+      if self.name.present?
+        hash['name'] = self.name.to_s
+        hash['display_name'] = self.display_name.to_s
+      end
       hash['dimension'] = self.dimension.to_s if self.dimension.present?
       hash['formula'] = self.formula.to_s if self.formula.present?
       hash['format_string'] = self.format_string.to_s if self.format_string.present?
@@ -66,15 +69,20 @@ module ::Rubiks
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 
       attrs = self.to_hash
-      attrs['name'] = self.name.titleize if self.name.present?
+      attrs['name'] = self.display_name if self.display_name.present?
       attrs['dimension'] = self.dimension.titleize if self.dimension.present?
       attrs.delete('format_string')
+      attrs.delete('display_name')
       builder.calculatedMember(attrs) do
         if self.format_string.present?
           format_attrs = {'name' => 'FORMAT_STRING', 'value' => self.format_string}
           builder.calculatedMemberProperty(format_attrs)
         end
       end
+    end
+
+    def to_json
+
     end
   end
 

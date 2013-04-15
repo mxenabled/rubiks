@@ -5,8 +5,9 @@ describe ::Rubiks::Dimension do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
+
   specify { subject.respond_to?(:hierarchies) }
 
   context 'when parsed from a valid hash' do
@@ -15,6 +16,7 @@ describe ::Rubiks::Dimension do
     its(:to_hash) { should have_key('hierarchies') }
 
     it { should be_valid }
+    it_behaves_like 'a valid annotated node'
 
     describe '#to_xml' do
       it 'renders a dimension tag with attributes' do

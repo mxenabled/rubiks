@@ -5,18 +5,19 @@ describe ::Rubiks::Hierarchy do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
+
   specify { subject.respond_to?(:levels) }
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(hierarchy_hash) }
 
     its(:to_hash) { should have_key('levels') }
-    its(:to_hash) { should have_key('name') }
     its(:to_hash) { should have_key('dimension') }
 
     it { should be_valid }
+    it_behaves_like 'a valid annotated node'
 
     describe '#to_xml' do
       it 'renders a hierarchy tag with attributes' do

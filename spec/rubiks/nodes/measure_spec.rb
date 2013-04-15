@@ -5,15 +5,15 @@ describe ::Rubiks::Measure do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(measure_hash) }
 
     it { should be_valid }
+    it_behaves_like 'a valid annotated node'
 
-    its(:to_hash) { should have_key('name') }
     its(:to_hash) { should have_key('aggregator') }
     its(:to_hash) { should have_key('format_string') }
 

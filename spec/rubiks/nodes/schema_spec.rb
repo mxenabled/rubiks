@@ -5,16 +5,16 @@ describe ::Rubiks::Schema do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
-  specify { subject.respond_to?(:to_json) }
-  specify { subject.respond_to?(:to_xml) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
+
   specify { subject.respond_to?(:cubes) }
 
   context 'when parsed from a valid hash' do
     subject { described_class.new_from_hash(schema_hash) }
 
     it { should be_valid }
+    it_behaves_like 'a valid annotated node'
 
     its(:to_hash) { should have_key('cubes') }
   end

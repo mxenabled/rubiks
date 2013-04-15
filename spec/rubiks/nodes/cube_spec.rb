@@ -5,8 +5,9 @@ describe ::Rubiks::Cube do
 
   subject { described_class.new_from_hash }
 
-  specify { subject.respond_to?(:from_hash) }
-  specify { subject.respond_to?(:to_hash) }
+  it_behaves_like 'an API node'
+  it_behaves_like 'an annotated node'
+
   specify { subject.respond_to?(:dimensions) }
   specify { subject.respond_to?(:measures) }
   specify { subject.respond_to?(:calculated_members) }
@@ -16,7 +17,7 @@ describe ::Rubiks::Cube do
 
     it { should be_valid }
 
-    its(:to_hash) { should have_key('name') }
+    it_behaves_like 'a valid annotated node'
 
     describe '#to_xml' do
       it 'renders a cube tag with attributes' do
