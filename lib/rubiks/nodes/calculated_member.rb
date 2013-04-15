@@ -81,8 +81,8 @@ module ::Rubiks
       end
     end
 
-    def to_json
-
+    def json_hash
+      self.to_hash
     end
   end
 

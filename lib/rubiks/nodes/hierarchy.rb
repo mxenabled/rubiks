@@ -64,6 +64,7 @@ module ::Rubiks
     def json_hash
       hash = self.to_hash
       hash.delete('dimension')
+      hash['levels'] = self.levels.map(&:json_hash) if self.levels.present?
       return hash
     end
 

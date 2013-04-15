@@ -69,6 +69,12 @@ module ::Rubiks
         end
       }
     end
+
+    def json_hash
+      hash = self.to_hash
+      hash['cubes'] = self.cubes.map(&:json_hash) if self.cubes.present?
+      return hash
+    end
   end
 
 end

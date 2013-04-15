@@ -134,6 +134,23 @@ module ::Rubiks
       return hash
     end
 
+    def json_hash
+      hash = self.to_hash
+
+      hash['dimensions'] = self.dimensions.map(&:json_hash) if self.dimensions.present?
+      hash['measures'] = self.measures.map(&:json_hash) if self.measures.present?
+
+      if calculated_members = hash.delete('calculated_members')
+        calculated_members.select{ |member| member['dimension'].downcase == 'measures' }.each do |member_hash|
+          member_hash.delete('dimension')
+          member_hash.delete('formula')
+          hash['measures'] << member_hash
+        end
+      end
+
+      return hash
+    end
+
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 

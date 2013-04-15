@@ -54,6 +54,12 @@ module ::Rubiks
       return hash
     end
 
+    def json_hash
+      hash = self.to_hash
+      hash['hierarchies'] = self.hierarchies.map(&:json_hash) if self.hierarchies.present?
+      return hash
+    end
+
     def to_xml(builder = nil)
       builder = Builder::XmlMarkup.new(:indent => 2) if builder.nil?
 

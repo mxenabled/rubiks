@@ -26,7 +26,7 @@ module ::Rubiks
 
     # Override this in subclasses if needed
     def json_hash
-      self.to_hash
+      raise '#json_hash should be subclassed'
     end
 
     def to_json
