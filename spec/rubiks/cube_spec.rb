@@ -9,23 +9,20 @@ describe ::Rubiks::Cube do
 
   subject { test_cube_class }
 
-  it { should respond_to :to_hash }
+  it { should respond_to :json_hash }
+  it { should respond_to :to_json }
   it { should respond_to :to_xml }
 
   it { should respond_to :dimension }
   it { should respond_to :measure }
   it { should respond_to :calculated_member }
 
-  its(:to_hash) { should have_key :name }
-  its(:to_hash) { should have_key :display_name }
+  its(:json_hash) { should have_key :name }
+  its(:json_hash) { should have_key :display_name }
 
-  describe '#to_xml' do
-    subject { test_cube_class.to_xml }
-
-    it { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
-      <cube name="Test Cube">
-        <table name="view_test_cubes"/>
-      </cube>
-    XML
-  end
+  its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
+    <cube name="Test Cube">
+      <table name="view_test_cubes"/>
+    </cube>
+  XML
 end

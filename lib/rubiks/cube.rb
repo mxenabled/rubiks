@@ -10,7 +10,7 @@ module ::Rubiks
         self.name.titleize
       end
 
-      def to_hash
+      def json_hash
         hash = {}
 
         hash[:name] = self.name
@@ -25,19 +25,11 @@ module ::Rubiks
         builder.cube(:name => self.display_name) do
           builder.table(:name => "view_#{self.name.tableize}")
         end
-
-#         attrs = Hash.new
-#         attrs['name'] = self.name.titleize if self.name.present?
-#         builder.cube(attrs) {
-#           builder.table('name' => "view_#{self.name.tableize}") if self.name.present?
-# 
-#           self.dimensions.each{ |dim| dim.to_xml(builder) } if self.dimensions.present?
-#           self.measures.each{ |measure| measure.to_xml(builder) } if self.measures.present?
-#           self.calculated_members.each{ |calculated_member| calculated_member.to_xml(builder) } if self.calculated_members.present?
-#         }
-
       end
 
+      def to_json
+        MultiJson.dump(self.json_hash)
+      end
 
       def dimension(name)
       end
@@ -51,17 +43,3 @@ module ::Rubiks
   end
 
 end
-
-    # dimension :dates
-
-    # measure :unit_sales, :aggregator => :sum, :format_string => '$#,###'
-    # measure :store_sales, :aggregator => :sum, :format_string => '$#,###'
-    # measure :store_cost, :aggregator => :sum, :format_string => '$#,###'
-
-    # calculated_member :profit, :dimension => :measures, :formula => '[Measures].[Store Sales] / [Measures].[Store Cost]', :format_string => '$#,###'
-
-
-    # include ActiveAttr::Attributes
-
-    # attribute :name
-    # attribute 
