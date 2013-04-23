@@ -12,6 +12,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'rspec'
   gem 'rspec-pride'
+  gem 'equivalent-xml'
 end
 
 group :development do
