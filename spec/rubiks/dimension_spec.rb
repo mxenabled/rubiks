@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe ::Rubiks::Dimension do
-  let(:test_cube_class) { 
+  let(:test_dimension_class) { 
     class TestDimension
       include ::Rubiks::Dimension
     end
   }
 
-  subject { test_cube_class }
+  subject { test_dimension_class }
 
   it { should respond_to :json_hash }
   it { should respond_to :to_json }
@@ -17,12 +17,24 @@ describe ::Rubiks::Dimension do
   it { should respond_to :hierarchy }
 
   its(:json_hash) { should have_key :name }
-  its(:json_hash) { should have_key :display_name }
+  its(:json_hash) { should have_key :caption }
 
   its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
-    <dimension name="Test Dimension">
+    <dimension name="Test Dimension" key="id">
     </dimension>
   XML
+
+  context 'with attributes' do
+    subject {
+      class TestDimension
+        include ::Rubiks::Dimension
+
+        attribute :year
+      end
+    }
+
+    # its(:json_hash) { should have_key :
+  end
 end
 
 # <?xml version="1.0" encoding="UTF-8"?>

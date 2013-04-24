@@ -18,11 +18,20 @@ describe ::Rubiks::Cube do
   it { should respond_to :calculated_member }
 
   its(:json_hash) { should have_key :name }
-  its(:json_hash) { should have_key :display_name }
+  its(:json_hash) { should have_key :caption }
 
   its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
     <cube name="Test Cube">
-      <table name="view_test_cubes"/>
+      <dimensions>
+      </dimensions>
+      <measureGroups>
+        <measureGroup table="test_cubes">
+          <measures>
+          </measures>
+          <dimensionLinks>
+          </dimensionLinks>
+        </measureGroup>
+      </measureGroups>
     </cube>
   XML
 end
