@@ -1,25 +1,34 @@
 require 'spec_helper'
 
 describe ::Rubiks::Schema do
-  let(:test_schema_class) { 
-    class TestSchema
-      include ::Rubiks::Schema
-    end
-  }
+  subject { described_class.new }
 
-  subject { test_schema_class }
-
-  it { should respond_to :json_hash }
-  it { should respond_to :to_json }
-  it { should respond_to :to_xml }
+  it_behaves_like 'a named object'
 
   it { should respond_to :cube }
 
-  its(:json_hash) { should have_key :name }
-  its(:json_hash) { should have_key :caption }
-
   its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
-    <schema name="Test Schema">
+    <schema name="Default">
     </schema>
   XML
 end
+
+# <schema name="default">
+#   <cube name="Sales">
+#     <table name="view_sales"/>
+#     <dimension name="Date" foreignKey="date_id">
+#       <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
+#         <table name="view_dates"/>
+#         <level name="Year" column="the_year" type="Numeric"/>
+#         <level name="Quarter" column="quarter" type="String"/>
+#         <level name="Month" column="month_of_year" type="Numeric"/>
+#       </hierarchy>
+#     </dimension>
+#     <measure name="Unit Sales" aggregator="sum" formatString="#,###" column="unit_sales"/>
+#     <measure name="Store Sales" aggregator="sum" formatString="#,###" column="store_sales"/>
+#     <measure name="Store Cost" aggregator="sum" formatString="#,###" column="store_cost"/>
+#     <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] / [Measures].[Store Cost]">
+#       <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
+#     </calculatedMember>
+#   </cube>
+# </schema>

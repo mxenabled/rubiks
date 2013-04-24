@@ -1,13 +1,15 @@
 require 'spec_helper'
 
-describe ::Rubiks::Cube do
+describe ::Rubiks::Hierarchy do
   subject { described_class.new }
 
   it_behaves_like 'a named object'
 
+  it { should respond_to :level }
+
   its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
-    <cube name="Default">
+    <hierarchy name="Default" primaryKey="id" hasAll="true">
       <table name="view_defaults"/>
-    </cube>
+    </hierarchy>
   XML
 end

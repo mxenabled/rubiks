@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'activesupport'
   gem.add_dependency 'builder'
   gem.add_dependency 'multi_json'
+  gem.add_dependency 'active_attr'
 
   # Check the Gemfile for test and development dependencies
 end

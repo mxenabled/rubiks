@@ -11,3 +11,5 @@ require 'rubiks'
 require 'rspec'
 require 'equivalent-xml'
 require 'pry-debugger' if ENV['DEBUG']
+
+Dir['./spec/support/**/*.rb'].sort.each{ |file| require file }
