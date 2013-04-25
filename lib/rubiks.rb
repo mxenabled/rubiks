@@ -18,4 +18,16 @@ module ::Rubiks
   autoload :NamedObject, 'rubiks/named_object'
   autoload :Measure, 'rubiks/measure'
   autoload :CalculatedMeasure, 'rubiks/calculated_measure'
+
+  def self.connection
+    raise 'No connection has been specified - try requiring rubiks/mondrian'
+  end
+
+  def self.execute(query)
+    connection.execute(query)
+  end
+
+  def self.schema
+    @schema ||= ::Rubiks::Schema.default
+  end
 end

@@ -24,6 +24,14 @@ module ::Rubiks
       @instances = nil
     end
 
+    def self.default
+      if instances.has_key?('default')
+        instances['default']
+      elsif instances.present?
+        instances.first[1]
+      end
+    end
+
     def self.[](instance_name)
       instances[instance_name.to_sym]
     end
@@ -63,9 +71,9 @@ module ::Rubiks
       @caption ||= @options[:caption] || name.titleize
     end
 
-    def table_name(new_value=nil)
-      @table_name = new_value if new_value.present?
-      @table_name ||= @options[:table_name] || "view_#{name.tableize}"
+    def table(new_value=nil)
+      @table = new_value if new_value.present?
+      @table ||= @options[:table] || "view_#{name.tableize}"
     end
 
     def to_json

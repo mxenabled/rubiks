@@ -29,10 +29,16 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = builder || new_builder
 
-      builder.hierarchy(default_xml_attributes.merge(:primaryKey => 'id', :hasAll => has_all.to_s)) do
-        builder.table(:name => table_name)
+      xml_attrs = default_xml_attributes.merge(:hasAll => has_all.to_s)
+      xml_attrs[:primaryKey] = 'id' unless degenerate?
+      builder.hierarchy(xml_attrs) do
+        builder.table(:name => table) unless degenerate?
         levels.each{ |level| level.to_xml(builder) }
       end
+    end
+
+    def degenerate?
+      table == 'degenerate'
     end
   end
 

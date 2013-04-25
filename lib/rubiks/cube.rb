@@ -61,7 +61,7 @@ module ::Rubiks
       builder = builder || new_builder
 
       builder.cube(default_xml_attributes) do
-        builder.table(:name => table_name)
+        builder.table(:name => table)
         dimensions.each{ |dimension| dimension.to_xml(builder) }
         measures.each{ |measure| measure.to_xml(builder) }
         calculated_measures.each{ |measure| measure.to_xml(builder) }
