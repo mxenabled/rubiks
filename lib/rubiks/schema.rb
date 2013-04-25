@@ -1,8 +1,6 @@
 module ::Rubiks
 
   class Schema < NamedObject
-    attribute :cubes, :default => Array.new
-
     def self.define(&block)
       raise ArgumentError, 'A block is required' unless block_given?
 
@@ -11,14 +9,25 @@ module ::Rubiks
       schema
     end
 
-    def cube(name, options={})
-      cubes.push(::Rubiks::Cube.new(options.merge('name' => name)))
+    def cubes
+      @cubes ||= []
+    end
+
+    def cube(cube_name, options={}, &block)
+      new_cube = ::Rubiks::Cube.new(cube_name.to_s, options)
+
+      new_cube.instance_eval(&block) if block_given?
+
+      cubes.push(new_cube)
+
+      new_cube
     end
 
     def to_xml(builder = nil)
       builder = builder || new_builder
 
       builder.schema(:name => caption) do
+        cubes.each{ |cube| cube.to_xml(builder) }
       end
     end
   end

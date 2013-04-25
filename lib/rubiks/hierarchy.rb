@@ -1,24 +1,27 @@
 module ::Rubiks
 
   class Hierarchy < ::Rubiks::NamedObject
-    attribute :has_all, :default => true
-    attribute :all_member_name, :default => 'All'
+    attr_accessor :table, :has_all, :all_member_name, :levels
 
-    attr_accessor :table
-
-    def level(name, options={})
-      cubes.push(::Rubiks::Level.new(options.merge('name' => name)))
+    def levels
+      @levels ||= []
     end
 
-    def table
-      attributes['table'] || "view_#{self.name.tableize}"
+    def level(level_name, options={})
+      levels.push(::Rubiks::Level.new(level_name, options))
+    end
+
+    def has_all(new_value=nil)
+      @has_all = new_value if new_value.present?
+      @has_all ||= true
     end
 
     def to_xml(builder = nil)
       builder = builder || new_builder
 
       builder.hierarchy(:name => caption, :primaryKey => 'id', :hasAll => has_all.to_s) do
-        builder.table(:name => table)
+        builder.table(:name => table_name)
+        levels.each{ |level| level.to_xml(builder) }
       end
     end
   end

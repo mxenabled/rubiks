@@ -19,9 +19,8 @@ describe ::Rubiks::Schema do
       end
 
       it 'evaluates the block' do
-        new_schema = described_class.define { cube 'Sample Cube' }
-        new_schema.cubes.length.should eq 1
-        new_schema.cubes.first.name.should eq 'Sample Cube'
+        new_schema = described_class.define { name 'Sample Cube' }
+        new_schema.name.should eq 'Sample Cube'
       end
     end
   end
@@ -37,23 +36,3 @@ describe ::Rubiks::Schema do
     </schema>
   XML
 end
-
-# <schema name="default">
-#   <cube name="Sales">
-#     <table name="view_sales"/>
-#     <dimension name="Date" foreignKey="date_id">
-#       <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
-#         <table name="view_dates"/>
-#         <level name="Year" column="the_year" type="Numeric"/>
-#         <level name="Quarter" column="quarter" type="String"/>
-#         <level name="Month" column="month_of_year" type="Numeric"/>
-#       </hierarchy>
-#     </dimension>
-#     <measure name="Unit Sales" aggregator="sum" formatString="#,###" column="unit_sales"/>
-#     <measure name="Store Sales" aggregator="sum" formatString="#,###" column="store_sales"/>
-#     <measure name="Store Cost" aggregator="sum" formatString="#,###" column="store_cost"/>
-#     <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] / [Measures].[Store Cost]">
-#       <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
-#     </calculatedMember>
-#   </cube>
-# </schema>
