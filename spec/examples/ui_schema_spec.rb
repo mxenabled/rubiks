@@ -29,7 +29,6 @@ describe 'A schema with UI specific attributes' do
 
   # describe '#json_hash' do
   #   it 'includes ui attributes' do
-  #     subject.json_hash.should have_key
   #     binding.pry
   #     subject.json_hash.should match_json_expression(
   #       :cubes => {}

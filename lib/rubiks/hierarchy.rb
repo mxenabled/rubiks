@@ -1,8 +1,6 @@
 module ::Rubiks
 
   class Hierarchy < ::Rubiks::NamedObject
-    attr_accessor :table, :has_all, :all_member_name, :levels
-
     def levels
       @levels ||= []
     end
@@ -11,9 +9,21 @@ module ::Rubiks
       levels.push(::Rubiks::Level.new(level_name, options))
     end
 
+    def all_member_name(new_value=nil)
+      @all_member_name = new_value.to_s if new_value.present?
+      @all_member_name ||= true
+    end
+
     def has_all(new_value=nil)
-      @has_all = new_value if new_value.present?
+      @has_all = new_value.to_s if new_value.present?
       @has_all ||= true
+    end
+
+    def json_hash
+      hash = default_json_attributes.merge(
+        :levels => levels.map{ |lvl| lvl.json_hash }
+      )
+      hash.delete_if { |key,value| value.nil? }
     end
 
     def to_xml(builder = nil)

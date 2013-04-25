@@ -65,14 +65,14 @@ module ::Rubiks
 
     def json_hash
       hash = default_json_attributes.merge(
-        :date_dimension => date_dimension,
-        :person_dimension => person_dimension,
-        :count_measure => count_measure,
-        :person_count_measure => person_count_measure
+        :date_dimension => date_dimension.to_s,
+        :person_dimension => person_dimension.to_s,
+        :count_measure => count_measure.to_s,
+        :person_count_measure => person_count_measure.to_s,
+        :dimensions => dimensions.map{ |dim| dim.json_hash },
+        :measures => json_measures
       )
-      hash[:dimensions] = dimensions.map{ |dim| dim.to_json }
-      hash[:measures] = json_measures if json_measures.present?
-      hash.delete_if { |key,value| value.nil? }
+      hash.delete_if { |key,value| value.nil? || value.blank? }
     end
 
     def to_xml(builder = nil)

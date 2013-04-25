@@ -23,7 +23,7 @@ module ::Rubiks
 
     def json_hash
       hash = default_json_attributes
-      hash[:cubes] = cubes.map{ |c| c.to_json } if cubes.present?
+      hash[:cubes] = cubes.map{ |c| c.json_hash } if cubes.present?
       hash
     end
 

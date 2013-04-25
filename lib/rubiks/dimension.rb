@@ -21,6 +21,14 @@ module ::Rubiks
       new_hierarchy
     end
 
+    def json_hash
+      hash = default_json_attributes.merge(
+        :hierarchies => hierarchies.map{ |hier| hier.json_hash }
+      )
+      hash[:type] = type.to_s if type.present?
+      hash.delete_if { |key,value| value.nil? }
+    end
+
     def to_xml(builder = nil)
       builder = builder || new_builder
 
