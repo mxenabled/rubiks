@@ -1,6 +1,33 @@
 module ::Rubiks
 
   class NamedObject
+    def self.define(new_name=nil, options={}, &block)
+      instance = new(new_name, options)
+      instance.instance_eval(&block) if block_given?
+      instances[instance.name.to_sym] = instance
+      instance
+    end
+
+    def self.instances
+      @instances ||= Hash.new
+    end
+
+    def self.find_or_create(instance_name, options={}, &block)
+      return instances[instance_name.to_sym] if instances.has_key?(instance_name.to_sym)
+
+      new_instance = new(instance_name.to_s, options)
+      new_instance.instance_eval(&block) if block_given?
+      new_instance
+    end
+
+    def self.clear!
+      @instances = nil
+    end
+
+    def self.[](instance_name)
+      instances[instance_name.to_sym]
+    end
+
     def initialize(new_name = nil, options = {})
       @name = new_name.to_s if new_name.present?
       @options = options.symbolize_keys
@@ -33,7 +60,7 @@ module ::Rubiks
 
     def caption(new_value=nil)
       @caption = new_value if new_value.present?
-      @caption ||= name.titleize
+      @caption ||= @options[:caption] || name.titleize
     end
 
     def table_name(new_value=nil)

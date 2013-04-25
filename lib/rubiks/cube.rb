@@ -1,9 +1,9 @@
 module ::Rubiks
 
   class Cube < NamedObject
-    def date_dimension(new_value=nil)
-      @date_dimension = new_value.to_s if new_value.present?
-      @date_dimension ||= @options[:date_dimension]
+    def time_dimension(new_value=nil)
+      @time_dimension = new_value.to_s if new_value.present?
+      @time_dimension ||= @options[:time_dimension]
     end
 
     def person_dimension(new_value=nil)
@@ -26,13 +26,7 @@ module ::Rubiks
     end
 
     def dimension(dimension_name, options={}, &block)
-      new_dimension = ::Rubiks::Dimension.new(dimension_name.to_s, options)
-
-      new_dimension.instance_eval(&block) if block_given?
-
-      dimensions.push(new_dimension)
-
-      new_dimension
+      dimensions.push ::Rubiks::Dimension.find_or_create(dimension_name, options, &block)
     end
 
     def measures
@@ -40,13 +34,7 @@ module ::Rubiks
     end
 
     def measure(measure_name, options={}, &block)
-      new_measure = ::Rubiks::Measure.new(measure_name.to_s, options)
-
-      new_measure.instance_eval(&block) if block_given?
-
-      measures.push(new_measure)
-
-      new_measure
+      measures.push ::Rubiks::Measure.find_or_create(measure_name, options, &block)
     end
 
     def calculated_measures
@@ -54,18 +42,12 @@ module ::Rubiks
     end
 
     def calculated_measure(calculated_measure_name, options={}, &block)
-      new_calculated_measure = ::Rubiks::CalculatedMeasure.new(calculated_measure_name.to_s, options)
-
-      new_calculated_measure.instance_eval(&block) if block_given?
-
-      calculated_measures.push(new_calculated_measure)
-
-      new_calculated_measure
+      calculated_measures.push ::Rubiks::CalculatedMeasure.find_or_create(calculated_measure_name, options, &block)
     end
 
     def json_hash
       hash = default_json_attributes.merge(
-        :date_dimension => date_dimension.to_s,
+        :time_dimension => time_dimension.to_s,
         :person_dimension => person_dimension.to_s,
         :count_measure => count_measure.to_s,
         :person_count_measure => person_count_measure.to_s,

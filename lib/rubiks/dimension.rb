@@ -11,14 +11,8 @@ module ::Rubiks
     end
 
     def hierarchy(hierarchy_name, options={}, &block)
-      options = options.merge(:table_name => self.table_name)
-      new_hierarchy = ::Rubiks::Hierarchy.new(hierarchy_name.to_s, options)
-
-      new_hierarchy.instance_eval(&block) if block_given?
-
-      hierarchies.push(new_hierarchy)
-
-      new_hierarchy
+      options.merge!(:table_name => self.table_name)
+      hierarchies.push ::Rubiks::Hierarchy.find_or_create(hierarchy_name, options, &block)
     end
 
     def json_hash

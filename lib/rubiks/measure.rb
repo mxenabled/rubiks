@@ -16,16 +16,6 @@ module ::Rubiks
       @format_string ||= @options[:format_string]
     end
 
-    def measure(measure_name, options={}, &block)
-      new_measure = ::Rubiks::Measure.new(measure_name.to_s, options)
-
-      new_measure.instance_eval(&block) if block_given?
-
-      measures.push(new_measure)
-
-      new_measure
-    end
-
     def to_xml(builder = nil)
       builder = builder || new_builder
 

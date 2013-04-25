@@ -5,8 +5,8 @@ module ::Rubiks
       @levels ||= []
     end
 
-    def level(level_name, options={})
-      levels.push(::Rubiks::Level.new(level_name, options))
+    def level(level_name, options={}, &block)
+      levels.push ::Rubiks::Level.find_or_create(level_name, options, &block)
     end
 
     def all_member_name(new_value=nil)

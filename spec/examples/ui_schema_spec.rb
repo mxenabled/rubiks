@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'A schema with UI specific attributes' do
   subject {
     ::Rubiks::Schema.define :transactions do
-      cube :transactions, :description => 'Financial transactions', :date_dimension => :date do
+      cube :transactions, :description => 'Financial transactions', :time_dimension => :date do
         dimension :date, :description => 'One row per day' do
           hierarchy :year_quarter_month, :description => 'YQM' do
             level :year, :type => :numeric, :description => 'Year', :contiguous => true
@@ -11,7 +11,7 @@ describe 'A schema with UI specific attributes' do
             level :month, :type => :numeric, :description => 'Month', :contiguous => true
           end
           hierarchy :weekday_weekend do
-            level :weekday_weekend, :type => :string, :contiguous => true, :cardinality => :low
+            level :weekday_weekend, :type => :string, :cardinality => :low
           end
         end
 
