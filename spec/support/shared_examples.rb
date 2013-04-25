@@ -8,5 +8,5 @@ shared_examples 'a named object' do
   it { should respond_to :name }
   it { should respond_to :caption }
   it { should respond_to :description }
-  it { should respond_to :is_visible }
+  it { should respond_to :visible }
 end

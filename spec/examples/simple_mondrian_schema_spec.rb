@@ -7,11 +7,11 @@ describe 'A simple Mondrian schema' do
 
       cube :sales do
         name :sales
-        dimension :date do
+        dimension :date, :type => 'TimeDimension' do
           hierarchy :year_quarter_month do
-            level :year, :data_type => :numeric
-            level :quarter, :data_type => :string
-            level :month, :data_type => :numeric
+            level :year, :type => :numeric, :level_type => 'TimeYears'
+            level :quarter, :type => :string, :level_type => 'TimeQuarters'
+            level :month, :type => :numeric, :level_type => 'TimeMonths'
           end
         end
         measure :sales, :aggregator => 'sum', :format_string => '$#,###'
@@ -26,12 +26,12 @@ describe 'A simple Mondrian schema' do
     <schema name="Sales">
       <cube name="Sales">
         <table name="view_sales"/>
-        <dimension name="Date" foreignKey="date_id">
+        <dimension name="Date" foreignKey="date_id" type="TimeDimension">
           <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
             <table name="view_dates"/>
-            <level name="Year" column="year" type="Numeric"/>
-            <level name="Quarter" column="quarter" type="String"/>
-            <level name="Month" column="month" type="Numeric"/>
+            <level name="Year" column="year" type="Numeric" levelType="TimeYears"/>
+            <level name="Quarter" column="quarter" type="String" levelType="TimeQuarters"/>
+            <level name="Month" column="month" type="Numeric" levelType="TimeMonths"/>
           </hierarchy>
         </dimension>
         <measure name="Sales" aggregator="sum" column="sales" formatString="$#,###"/>

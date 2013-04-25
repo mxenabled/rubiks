@@ -14,7 +14,8 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = builder || new_builder
 
-      xml_attrs = {:name => caption, :dimension => 'Measures'}
+      xml_attrs = default_xml_attributes
+      xml_attrs[:dimension] = 'Measures'
       xml_attrs[:formula] = formula if formula.present?
       xml_attrs[:formatString] = format_string if format_string.present?
 

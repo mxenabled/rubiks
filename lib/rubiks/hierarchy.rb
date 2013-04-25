@@ -19,7 +19,7 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = builder || new_builder
 
-      builder.hierarchy(:name => caption, :primaryKey => 'id', :hasAll => has_all.to_s) do
+      builder.hierarchy(default_xml_attributes.merge(:primaryKey => 'id', :hasAll => has_all.to_s)) do
         builder.table(:name => table_name)
         levels.each{ |level| level.to_xml(builder) }
       end

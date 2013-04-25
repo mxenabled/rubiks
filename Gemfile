@@ -13,6 +13,7 @@ group :test do
   gem 'rspec'
   gem 'rspec-pride'
   gem 'equivalent-xml'
+  gem 'json_expressions'
 end
 
 group :development do

@@ -7,12 +7,6 @@ describe ::Rubiks::Schema do
     it { should respond_to :define }
 
     describe '.define' do
-      it 'requires a block' do
-        lambda {
-          described_class.define
-        }.should raise_error
-      end
-
       it 'returns a new instance' do
         new_schema = described_class.define { }
         new_schema.should be_kind_of ::Rubiks::Schema

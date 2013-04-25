@@ -11,14 +11,19 @@ module ::Rubiks
       @name ||= @options[:name] || 'default'
     end
 
+    def icon_type(new_value=nil)
+      @icon_type = new_value.to_s if new_value.present?
+      @icon_type ||= @options[:icon_type]
+    end
+
     def description(new_value=nil)
       @description = new_value.to_s if new_value.present?
       @description ||= @options[:description]
     end
 
-    def is_visible(new_value=nil)
-      @is_visible = new_value.to_s if new_value.present?
-      @is_visible ||= @options[:is_visible] || true
+    def visible(new_value=nil)
+      @visible = new_value.to_s unless new_value.nil?
+      @visible ||= @options.key?(:visible) ? @options[:visible].to_s : nil
     end
 
     def column(new_value=nil)
@@ -36,16 +41,31 @@ module ::Rubiks
       @table_name ||= @options[:table_name] || "view_#{name.tableize}"
     end
 
-    def json_hash
-      {
-        :name => name,
-        :caption => caption
-      }
-    end
-
     def to_json
       MultiJson.dump(json_hash)
     end
+
+    def default_json_attributes
+      json_attrs = {
+        :name => name,
+        :caption => caption,
+        :description => description,
+        :icon_type => icon_type
+      }
+      json_attrs[:visible] = visible if visible.present? && visible == 'false'
+      json_attrs.delete_if { |key,value| value.nil? }
+    end
+    alias_method :json_hash, :default_json_attributes
+
+    def default_xml_attributes
+      xml_attrs = {
+        :name => caption,
+        :description => description
+      }
+      xml_attrs[:visible] = visible if visible.present? && visible == 'false'
+      xml_attrs.delete_if { |key,value| value.nil? }
+    end
+    alias_method :xml_hash, :default_xml_attributes
 
     def to_xml(builder = nil)
       return if name.blank?

@@ -1,11 +1,9 @@
 module ::Rubiks
 
   class Schema < NamedObject
-    def self.define(&block)
-      raise ArgumentError, 'A block is required' unless block_given?
-
-      schema = new
-      schema.instance_eval(&block)
+    def self.define(schema_name=nil, options={}, &block)
+      schema = new(schema_name, options)
+      schema.instance_eval(&block) if block_given?
       schema
     end
 
@@ -21,6 +19,12 @@ module ::Rubiks
       cubes.push(new_cube)
 
       new_cube
+    end
+
+    def json_hash
+      hash = default_json_attributes
+      hash[:cubes] = cubes.map{ |c| c.to_json } if cubes.present?
+      hash
     end
 
     def to_xml(builder = nil)

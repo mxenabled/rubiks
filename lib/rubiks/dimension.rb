@@ -1,6 +1,11 @@
 module ::Rubiks
 
   class Dimension < NamedObject
+    def type(new_value=nil)
+      @type = new_value.to_s if new_value.present?
+      @type ||= @options[:type]
+    end
+
     def hierarchies
       @hierarchies ||= []
     end
@@ -19,7 +24,9 @@ module ::Rubiks
     def to_xml(builder = nil)
       builder = builder || new_builder
 
-      builder.dimension(:name => caption, :foreignKey => "#{name}_id") do
+      xml_attrs = default_xml_attributes.merge(:foreignKey => "#{name}_id")
+      xml_attrs[:type] = type if type.present?
+      builder.dimension(xml_attrs) do
         hierarchies.each{ |hierarchy| hierarchy.to_xml(builder) }
       end
     end
