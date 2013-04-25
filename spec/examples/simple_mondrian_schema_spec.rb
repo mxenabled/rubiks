@@ -29,9 +29,9 @@ describe 'A simple Mondrian schema' do
         <dimension name="Date" foreignKey="date_id">
           <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
             <table name="view_dates"/>
-            <level name="Year" column="year" type="numeric"/>
-            <level name="Quarter" column="quarter" type="string"/>
-            <level name="Month" column="month" type="numeric"/>
+            <level name="Year" column="year" type="Numeric"/>
+            <level name="Quarter" column="quarter" type="String"/>
+            <level name="Month" column="month" type="Numeric"/>
           </hierarchy>
         </dimension>
         <measure name="Sales" aggregator="sum" column="sales" formatString="$#,###"/>

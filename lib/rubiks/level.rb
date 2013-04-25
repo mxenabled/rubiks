@@ -25,7 +25,7 @@ module ::Rubiks
       builder = builder || new_builder
 
       xml_attrs = {:name => caption, :column => column}
-      xml_attrs[:type] = data_type.to_s if data_type.present?
+      xml_attrs[:type] = data_type.to_s.titleize if data_type.present?
       builder.level(xml_attrs)
     end
   end
