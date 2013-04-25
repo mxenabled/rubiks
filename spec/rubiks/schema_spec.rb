@@ -1,6 +1,31 @@
 require 'spec_helper'
 
 describe ::Rubiks::Schema do
+  context 'the class' do
+    subject { described_class }
+
+    it { should respond_to :define }
+
+    describe '.define' do
+      it 'requires a block' do
+        lambda {
+          described_class.define
+        }.should raise_error
+      end
+
+      it 'returns a new instance' do
+        new_schema = described_class.define { }
+        new_schema.should be_kind_of ::Rubiks::Schema
+      end
+
+      it 'evaluates the block' do
+        new_schema = described_class.define { cube 'Sample Cube' }
+        new_schema.cubes.length.should eq 1
+        new_schema.cubes.first.name.should eq 'Sample Cube'
+      end
+    end
+  end
+
   subject { described_class.new }
 
   it_behaves_like 'a named object'
