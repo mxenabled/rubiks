@@ -8,7 +8,7 @@ describe ::Rubiks::Hierarchy do
   it { should respond_to :level }
 
   its(:to_xml) { should be_equivalent_to(Nokogiri::XML(<<-XML)) }
-    <hierarchy name="Default" primaryKey="id" hasAll="true">
+    <hierarchy name="Default" primaryKey="id" hasAll="true" allMemberName="All">
       <table name="view_defaults"/>
     </hierarchy>
   XML
