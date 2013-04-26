@@ -48,6 +48,8 @@ module ::Rubiks
       builder = builder || new_builder
 
       xml_attrs = default_xml_attributes.merge(:column => column)
+      xml_attrs[:nameColumn] = name_column if name_column.present?
+      xml_attrs[:ordinalColumn] = ordinal_column if ordinal_column.present?
       xml_attrs[:levelType] = level_type if level_type.present?
       xml_attrs[:type] = type.to_s.capitalize if type.present?
       builder.level(xml_attrs)
