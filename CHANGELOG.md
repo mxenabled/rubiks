@@ -1,3 +1,6 @@
+## 0.1.2
+* Use just the name attribute for JSON
+
 ## 0.1.1
 * Add nameColumn and ordinalColumn to XML output of levels
 
