@@ -32,7 +32,7 @@ describe 'A simple Mondrian schema' do
       <cube name="Transactions">
         <table name="view_transactions"/>
         <dimension name="Date" foreignKey="date_id" type="TimeDimension">
-          <hierarchy name="YQMWD" hasAll="true" primaryKey="id">
+          <hierarchy name="YQMWD" hasAll="true" primaryKey="id" allMemberName="All">
             <table name="view_dates"/>
             <level name="Year" column="year" levelType="TimeYears" type="Numeric"/>
             <level name="Quarter" column="quarter" levelType="TimeQuarters" type="Numeric"/>
@@ -42,7 +42,7 @@ describe 'A simple Mondrian schema' do
           </hierarchy>
         </dimension>
         <dimension name="Account" foreignKey="account_id">
-          <hierarchy name="Account Type" hasAll="true" primaryKey="id">
+          <hierarchy name="Account Type" hasAll="true" primaryKey="id" allMemberName="All">
             <table name="view_accounts"/>
             <level name="Asset Liability" column="asset_liability"/>
             <level name="Account Type" column="account_type"/>
