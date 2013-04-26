@@ -1,9 +1,12 @@
 require 'java'
-require 'rubiks/mondrian_connection'
+require 'rubiks/mondrian/connection'
+require 'rubiks/mondrian/errors'
 
-# Require all jars in lib/rubiks/jars
-Dir[File.expand_path('../jars/*.jar', __FILE__)].each{ |jar| require jar }
-#Dir[File.expand_path('../saiku_jars/*.jar', __FILE__)].each{ |jar| require jar }
+# path = File.expand_path('../../../saiku_jars/*.jar', __FILE__)
+# p [path, Dir[path]]
+# binding.pry
+Dir[File.expand_path('../mondrian/jars/*.jar', __FILE__)].each{ |jar| require jar }
+#Dir[File.expand_path('../../../saiku_jars/*.jar', __FILE__)].each{ |jar| require jar }
 
 # register Mondrian olap4j driver
 Java::mondrian.olap4j.MondrianOlap4jDriver
@@ -13,9 +16,9 @@ module ::Rubiks
     @connection ||= ::Rubiks::Mondrian.connection
   end
 
-  class Mondrian
+  module Mondrian
     def self.connection
-      @connection ||= ::Rubiks::MondrianConnection.create(
+      @connection ||= ::Rubiks::Mondrian::Connection.create(
         config.merge(:catalog_content => ::Rubiks.schema.to_xml)
       )
     end
@@ -26,7 +29,7 @@ module ::Rubiks
 
     def self.config
       @config ||= begin
-        if defined?(Rails)
+        if defined?(ActiveRecord)
           ar_config = ActiveRecord::Base.connection.config
 
           {
