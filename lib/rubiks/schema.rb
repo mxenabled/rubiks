@@ -17,6 +17,7 @@ module ::Rubiks
 
     def to_xml(builder = nil)
       builder = builder || new_builder
+      builder.instruct!
 
       builder.schema(:name => caption) do
         cubes.each{ |cube| cube.to_xml(builder) }
