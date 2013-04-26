@@ -23,7 +23,7 @@ describe ::Rubiks::Cube do
 
     it 'adds calculated measures to the measures array' do
       subject.json_hash['measures'].length.should eq 1
-      subject.json_hash['measures'].first['name'].should eq 'profit'
+      subject.json_hash['measures'].first['name'].should eq 'Profit'
     end
   end
 end
