@@ -17,9 +17,10 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_dependency 'rltk'
   gem.add_dependency 'activesupport'
   gem.add_dependency 'builder'
+  gem.add_dependency 'multi_json'
+  gem.add_dependency 'active_attr'
 
   # Check the Gemfile for test and development dependencies
 end
