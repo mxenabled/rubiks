@@ -11,7 +11,7 @@ module ::Rubiks
 
     def all_member_name(new_value=nil)
       @all_member_name = new_value.to_s if new_value.present?
-      @all_member_name ||= true
+      @all_member_name ||= @options[:all_member_name] || 'All'
     end
 
     def has_all(new_value=nil)
@@ -32,6 +32,7 @@ module ::Rubiks
 
       xml_attrs = default_xml_attributes.merge(:hasAll => has_all.to_s)
       xml_attrs[:primaryKey] = 'id' unless degenerate?
+      xml_attrs[:allMemberName] = all_member_name if has_all
       builder.hierarchy(xml_attrs) do
         builder.table(:name => table) unless degenerate?
         levels.each{ |level| level.to_xml(builder) }
