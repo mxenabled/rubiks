@@ -1,3 +1,6 @@
+## 0.1.1
+* Add nameColumn and ordinalColumn to XML output of levels
+
 ## 0.1.0
 * Remove RLTK
 * Generate Mondrian 3 schema
