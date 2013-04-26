@@ -85,6 +85,7 @@ end
 
 puts schema.to_xml
 ```
+
 You should see this XML:
 
 ```xml
@@ -127,8 +128,10 @@ Check out these projects (which have been super helpful in working on Rubiks):
 
 ### Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+If you'd like to contribute to Rubiks, that's awesome, and we <3 you. There's a guide to contributing
+(both code and general help) over in [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+### Development
+
+To see what has changed in recent versions, see the [CHANGELOG.md](CHANGELOG.md).
