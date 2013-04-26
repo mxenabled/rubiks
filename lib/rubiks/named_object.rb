@@ -82,8 +82,7 @@ module ::Rubiks
 
     def default_json_attributes
       json_attrs = {
-        :name => name,
-        :caption => caption,
+        :name => caption,
         :description => description,
         :icon_type => icon_type
       }
