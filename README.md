@@ -12,9 +12,38 @@
 [codeclimate]: https://codeclimate.com/github/moneydesktop/rubiks
 [coveralls]: https://coveralls.io/r/moneydesktop/rubiks
 
-A gem to allow defining an OLAP schema from a hash and generating an XML schema for Mondrian.
+[jruby]: http://jruby.org
+[wiki_cube]: http://en.wikipedia.org/wiki/OLAP_cube
+[wiki_olap]: http://en.wikipedia.org/wiki/Online_analytical_processing
+[wiki_mdx]: http://en.wikipedia.org/wiki/MultiDimensional_eXpressions
+[wiki_open_source]: http://en.wikipedia.org/wiki/Open-source_software
+[wiki_java]: http://en.wikipedia.org/wiki/Java_(programming_language)
+[wiki_data_warehouse]: http://en.wikipedia.org/wiki/Data_warehouse
+[wiki_star_schema]: http://en.wikipedia.org/wiki/Star_schema
+[wiki_dimensional_modeling]: http://en.wikipedia.org/wiki/Dimensional_modeling
+[postgresql]: http://www.postgresql.org
+[mondrian]: http://mondrian.pentaho.com
+[mondrian_schema]: http://mondrian.pentaho.com/documentation/schema.php
+[rails]: http://rubyonrails.org
 
-## Installation
+Rubiks is a [Online Analytical Processing](wiki_olap) ( **OLAP** ) library written in [JRuby](jruby).
+It runs on top of [Mondrian](mondrian) (an [Open-source](wiki_open_source) [OLAP](wiki_olap) server
+written in [Java](wiki_java)) and provides the ability to:
+
+* define a [OLAP](wiki_olap) schema in Ruby
+* generate a [Mondrian XML schema](mondrian_schema) from this definition
+* execute [MultiDimensional eXpressions](wiki_mdx) ( **MDX** ) queries against the OLAP server
+
+
+### Assumptions
+
+* You are using [JRuby](jruby)
+* You are using [PostgreSQL](postgresql)
+* You have designed and populated your [Data Warehouse](wiki_data_warehouse) (see [Dimensional Modeling](wiki_dimensional_modeling) and [Star Schema](wiki_star_schema))
+* You are using [Ruby on Rails](rails) database naming conventions
+
+
+### Installation
 
 Run `gem install rubiks` to install the gem on its own.
 
@@ -22,92 +51,81 @@ Or you can add the following to your Gemfile and run the `bundle` command to ins
 
     gem 'rubiks'
 
-## Examples
 
-This is an example taken from the [Mondrian documentation](http://mondrian.pentaho.com/documentation/schema.php#Cubes_and_dimensions) (then simplified a little and modified to use some Rails/Rubiks conventions)
+### Schema Example
 
 After installing the gem, fire up an IRB session with `irb` or `bundle exec irb` if you are using Bundler, and follow this (or even paste it into your session):
 
 ```ruby
-require 'rubiks/examples'
+require 'rubiks'
 
-md = Rubiks::Examples::MondrianDocs
+schema = ::Rubiks::Schema.define :banking do
+  cube :transactions do
+    dimension :date, :type => 'TimeDimension' do
+      hierarchy :yqmwd, :caption => 'YQMWD' do
+        level :year,    :level_type => 'TimeYears', :type => :numeric, :contiguous => true
+        level :quarter, :level_type => 'TimeQuarters', :type => :numeric, :contiguous => true, :cardinality => :low
+        level :month,   :level_type => 'TimeMonths', :type => :numeric, :contiguous => true
+        level :week,    :level_type => 'TimeWeeks', :type => :numeric, :column => :week_of_month, :contiguous => true, :cardinality => :low
+        level :day,     :level_type => 'TimeDays', :type => :numeric, :contiguous => true
+      end
+    end
 
-md.filename           # => "/path/to/rubiks/examples/mondrian_docs.yml"
+    dimension :account do
+      hierarchy :account_type do
+        level :asset_liability, :cardinality => :low
+        level :account_type
+      end
+    end
 
-puts md.file_contents # see the YAML section below
+    measure :count, :column => :quantity
+    measure :amount, :aggregator => :sum, :format_string => '$#,###'
+  end
+end
 
-puts md.to_xml        # see the XML section below
+puts schema.to_xml
 ```
-
-The [example YAML file](examples/mondrian_docs.yml) contents are:
-
-```yaml
-cubes:
-  - name: sales
-    dimensions:
-      - name: date
-        hierarchies:
-          - name: year_quarter_month
-            levels:
-              - name: year
-                column: the_year
-                data_type: numeric
-
-              - name: quarter
-                data_type: string
-
-              - name: month
-                column: month_of_year
-                data_type: Numeric
-
-    measures:
-      - name: unit_sales
-        aggregator: sum
-        format_string: '#,###'
-
-      - name: store_sales
-        aggregator: sum
-        format_string: '#,###'
-
-      - name: store_cost
-        aggregator: sum
-        format_string: '#,###'
-
-    calculated_members:
-      - name: profit
-        dimension: measures
-        formula: '[Measures].[Store Sales] / [Measures].[Store Cost]'
-        format_string: '$#,##0.00'
-```
-
-and the generated XML is:
-
+You should see this XML:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<schema name="default">
-  <cube name="Sales">
-    <table name="view_sales"/>
-    <dimension name="Date" foreignKey="date_id">
-      <hierarchy name="Year Quarter Month" primaryKey="id" hasAll="true">
+<schema name="Banking">
+  <cube name="Transactions">
+    <table name="view_transactions"/>
+    <dimension name="Date" foreignKey="date_id" type="TimeDimension">
+      <hierarchy name="YQMWD" hasAll="true" primaryKey="id">
         <table name="view_dates"/>
-        <level name="Year" column="the_year" type="Numeric"/>
-        <level name="Quarter" column="quarter" type="String"/>
-        <level name="Month" column="month_of_year" type="Numeric"/>
+        <level name="Year" column="year" levelType="TimeYears" type="Numeric"/>
+        <level name="Quarter" column="quarter" levelType="TimeQuarters" type="Numeric"/>
+        <level name="Month" column="month" levelType="TimeMonths" type="Numeric"/>
+        <level name="Week" column="week_of_month" levelType="TimeWeeks" type="Numeric"/>
+        <level name="Day" column="day" levelType="TimeDays" type="Numeric"/>
       </hierarchy>
     </dimension>
-    <measure name="Unit Sales" aggregator="sum" formatString="#,###" column="unit_sales"/>
-    <measure name="Store Sales" aggregator="sum" formatString="#,###" column="store_sales"/>
-    <measure name="Store Cost" aggregator="sum" formatString="#,###" column="store_cost"/>
-    <calculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] / [Measures].[Store Cost]">
-      <calculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
-    </calculatedMember>
+    <dimension name="Account" foreignKey="account_id">
+      <hierarchy name="Account Type" hasAll="true" primaryKey="id">
+        <table name="view_accounts"/>
+        <level name="Asset Liability" column="asset_liability"/>
+        <level name="Account Type" column="account_type"/>
+      </hierarchy>
+    </dimension>
+    <measure name="Count" column="quantity" aggregator="count"/>
+    <measure name="Amount" column="amount" aggregator="sum" formatString="$#,###"/>
   </cube>
 </schema>
 ```
 
-## Contributing
+
+### Similar projects
+
+Check out these projects (which have been super helpful in working on Rubiks):
+
+* [Mondrian (git)](https://github.com/pentaho/mondrian) - source code for Mondrian on GitHub
+* [mondrian-olap](https://github.com/rsim/mondrian-olap) - a RubyGem wrapping Mondrian
+* [Saiku](http://analytical-labs.com) ([Saiku on GitHub](https://github.com/OSBI/saiku)) - a modular open-source analysis suite offering lightweight OLAP which remains easily embeddable, extendable and configurable.
+
+
+### Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
