@@ -1,3 +1,6 @@
+## 0.1.3
+* Add allMemberName to hierarchy
+
 ## 0.1.2
 * Use just the name attribute for JSON
 
