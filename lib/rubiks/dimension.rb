@@ -26,6 +26,7 @@ module ::Rubiks
       )
       hash[:type] = type.to_s if type.present?
       hash.delete_if { |key,value| value.nil? }
+      hash.stringify_keys!
     end
 
     def to_xml(builder = nil)

@@ -76,8 +76,8 @@ module ::Rubiks
       @table ||= @options[:table] || "view_#{name.tableize}"
     end
 
-    def to_json
-      MultiJson.dump(json_hash)
+    def to_json(options={})
+      MultiJson.encode(json_hash, options)
     end
 
     def default_json_attributes
@@ -89,6 +89,7 @@ module ::Rubiks
       }
       json_attrs[:visible] = visible if visible.present? && visible == 'false'
       json_attrs.delete_if { |key,value| value.nil? }
+      json_attrs.stringify_keys!
     end
     alias_method :json_hash, :default_json_attributes
 

@@ -55,6 +55,7 @@ module ::Rubiks
         :measures => json_measures
       )
       hash.delete_if { |key,value| value.nil? || value.blank? }
+      hash.stringify_keys!
     end
 
     def to_xml(builder = nil)

@@ -41,7 +41,7 @@ module ::Rubiks
       hash[:cardinality] = cardinality.to_s if cardinality.present?
       hash[:visible] = visible if visible.present? && visible == 'false'
       hash[:contiguous] = contiguous if contiguous.present? && contiguous == 'true'
-      hash
+      hash.stringify_keys!
     end
 
     def to_xml(builder = nil)

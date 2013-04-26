@@ -12,7 +12,7 @@ module ::Rubiks
     def json_hash
       hash = default_json_attributes
       hash[:cubes] = cubes.map{ |c| c.json_hash } if cubes.present?
-      hash
+      hash.stringify_keys!
     end
 
     def to_xml(builder = nil)

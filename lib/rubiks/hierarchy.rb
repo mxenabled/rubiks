@@ -24,6 +24,7 @@ module ::Rubiks
         :levels => levels.map{ |lvl| lvl.json_hash }
       )
       hash.delete_if { |key,value| value.nil? }
+      hash.stringify_keys!
     end
 
     def to_xml(builder = nil)

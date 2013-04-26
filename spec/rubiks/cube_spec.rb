@@ -18,12 +18,12 @@ describe ::Rubiks::Cube do
       cube
     }
 
-    its(:json_hash) { should_not have_key :calculated_measures }
-    its(:json_hash) { should have_key :measures }
+    its(:json_hash) { should_not have_key 'calculated_measures' }
+    its(:json_hash) { should have_key 'measures' }
 
     it 'adds calculated measures to the measures array' do
-      subject.json_hash[:measures].length.should eq 1
-      subject.json_hash[:measures].first[:name].should eq 'profit'
+      subject.json_hash['measures'].length.should eq 1
+      subject.json_hash['measures'].first['name'].should eq 'profit'
     end
   end
 end
