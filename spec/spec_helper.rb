@@ -9,12 +9,18 @@ SimpleCov.start
 
 require 'rubiks'
 require 'rspec'
+require 'equivalent-xml'
+require 'json_expressions/rspec'
 require 'pry-debugger' if ENV['DEBUG']
 
-require 'support/schema_context'
-require 'support/shared_examples'
-require 'support/matchers/be_like'
+Dir['./spec/support/**/*.rb'].sort.each{ |file| require file }
 
 RSpec.configure do |config|
-  config.include Matchers
+  config.before :each do
+    ::Rubiks::Schema.clear!
+    ::Rubiks::Cube.clear!
+    ::Rubiks::Dimension.clear!
+    # ::Rubiks::Hierarchy.clear!
+    # ::Rubiks::Level.clear!
+  end
 end

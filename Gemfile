@@ -12,6 +12,8 @@ group :test do
   gem 'simplecov', :require => false
   gem 'rspec'
   gem 'rspec-pride'
+  gem 'equivalent-xml'
+  gem 'json_expressions'
 end
 
 group :development do
