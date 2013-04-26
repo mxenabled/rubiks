@@ -1,3 +1,5 @@
+require 'rubiks/mondrian/member'
+
 module ::Rubiks
   module Mondrian
 
@@ -19,21 +21,21 @@ module ::Rubiks
         "#<#{self.class} cube=#{cube_name} #{axes_strings.join(' ')}>"
       end
 
-      def cube_name
-        @raw_cell_set.meta_data.cube.name
-      end
-
       def to_hash
         {
           :cube_name => cube_name,
           :cells => cells,
           :axes => result_axes,
           :filter_axis => filter_axis
-        }
+        }.delete_if{ |k,v| v.blank? }
       end
 
-      def axes
-        @axes ||= @raw_cell_set.getAxes
+      def cells
+        raw_cells.flatten
+      end
+
+      def cube_name
+        @raw_cell_set.meta_data.cube.name
       end
 
       def filter_axis
@@ -46,6 +48,10 @@ module ::Rubiks
 
       def row_axis
         result_axes[1]
+      end
+
+      def axes
+        @axes ||= @raw_cell_set.getAxes
       end
 
       def result_axes
@@ -62,6 +68,8 @@ module ::Rubiks
         tuples = axis.getPositions.map do |position|
 
           members = position.getMembers.map do |raw_member|
+            member = ::Rubiks::Mondrian::Member.new(raw_member)
+
             names = [raw_member.level.name]
             names << raw_member.level.hierarchy.name.split('.').last
             names << raw_member.level.hierarchy.dimension.name
@@ -73,12 +81,17 @@ module ::Rubiks
 
             {
               :name => raw_member.name,
-              :path => path_name,
               :unique_name => generate_unique_name(member_unique_name),
               :level_name => generate_unique_name(level_unique_name),
-              :level_depth => raw_member.depth
+              :path => path_name,
+              :level_depth => raw_member.depth,
+              :child_count => member.children.length,
+              :is_all_member => member.all_member?,
+              :is_drillable => member.drillable?
             }
           end
+
+          members.compact!
 
           if members.present?
             {:members => members}
@@ -110,19 +123,14 @@ module ::Rubiks
         "[#{cube_name}].#{formatted_string}"
       end
 
-      def cells
-        raw_cells.flatten
-      end
-
       def raw_cells
-        axes_sequence = (0...@raw_cell_set.axes.count).to_a.reverse
+        axes_sequence = (0...axes.size).to_a.reverse
         recursive_values(axes_sequence, 0)
       end
 
       def recursive_values(axes_sequence, current_index, cell_params=[])
         if axis_number = axes_sequence[current_index]
-          positions_size = @raw_cell_set.axes[axis_number].getPositions.size
-          (0...positions_size).map do |i|
+          (0...axes[axis_number].getPositions.size).map do |i|
             cell_params[axis_number] = Java::JavaLang::Integer.new(i)
             recursive_values(axes_sequence, current_index + 1, cell_params)
           end

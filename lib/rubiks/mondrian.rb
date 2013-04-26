@@ -2,11 +2,7 @@ require 'java'
 require 'rubiks/mondrian/connection'
 require 'rubiks/mondrian/errors'
 
-# path = File.expand_path('../../../saiku_jars/*.jar', __FILE__)
-# p [path, Dir[path]]
-# binding.pry
 Dir[File.expand_path('../mondrian/jars/*.jar', __FILE__)].each{ |jar| require jar }
-#Dir[File.expand_path('../../../saiku_jars/*.jar', __FILE__)].each{ |jar| require jar }
 
 # register Mondrian olap4j driver
 Java::mondrian.olap4j.MondrianOlap4jDriver
