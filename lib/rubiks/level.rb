@@ -39,7 +39,7 @@ module ::Rubiks
     def json_hash
       hash = default_json_attributes
       hash[:cardinality] = cardinality.to_s if cardinality.present?
-      hash[:visible] = visible if visible.present? && visible == 'false'
+      hash[:hidden] = hidden if hidden.present? && hidden == 'false'
       hash[:contiguous] = contiguous if contiguous.present? && contiguous == 'true'
       hash.stringify_keys!
     end
