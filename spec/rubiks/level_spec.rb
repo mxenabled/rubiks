@@ -17,4 +17,13 @@ describe ::Rubiks::Level do
 
     its(:xml_hash) { should_not have_key :cardinality }
   end
+
+  context 'when hidden' do
+    subject { described_class.new('default', :hidden => true) }
+
+    it 'includes the hidden attribute' do
+      subject.json_hash.should have_key 'hidden'
+      subject.json_hash['hidden'].should eq 'true'
+    end
+  end
 end

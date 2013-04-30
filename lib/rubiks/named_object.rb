@@ -56,9 +56,9 @@ module ::Rubiks
       @description ||= @options[:description]
     end
 
-    def visible(new_value=nil)
-      @visible = new_value.to_s unless new_value.nil?
-      @visible ||= @options.key?(:visible) ? @options[:visible].to_s : nil
+    def hidden(new_value=nil)
+      @hidden = new_value.to_s unless new_value.nil?
+      @hidden ||= @options.key?(:hidden) ? @options[:hidden].to_s : nil
     end
 
     def column(new_value=nil)
@@ -86,7 +86,7 @@ module ::Rubiks
         :description => description,
         :icon_type => icon_type
       }
-      json_attrs[:visible] = visible if visible.present? && visible == 'false'
+      json_attrs[:hidden] = hidden if hidden.present? && hidden == 'true'
       json_attrs.delete_if { |key,value| value.nil? }
       json_attrs.stringify_keys!
     end
@@ -97,7 +97,6 @@ module ::Rubiks
         :name => caption,
         :description => description
       }
-      xml_attrs[:visible] = visible if visible.present? && visible == 'false'
       xml_attrs.delete_if { |key,value| value.nil? }
     end
     alias_method :xml_hash, :default_xml_attributes
