@@ -1,3 +1,6 @@
+## 0.1.5
+* Better error messages
+
 ## 0.1.4
 * Rename NamedObject#visible to #hidden
 
