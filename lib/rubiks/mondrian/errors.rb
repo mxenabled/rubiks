@@ -11,7 +11,7 @@ module ::Rubiks
     def initialize(native_error)
       @native_error = native_error
       get_root_cause
-      super(native_error.message)
+      super(@root_cause_message)
       add_root_cause_to_backtrace
     end
 
