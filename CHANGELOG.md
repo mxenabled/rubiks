@@ -1,3 +1,6 @@
+## 0.1.6
+* Added controls to flush the schema cache and reset the mondrian connection
+
 ## 0.1.5
 * Better error messages
 
