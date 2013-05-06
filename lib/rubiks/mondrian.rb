@@ -8,10 +8,6 @@ Dir[File.expand_path('../mondrian/jars/*.jar', __FILE__)].each{ |jar| require ja
 Java::mondrian.olap4j.MondrianOlap4jDriver
 
 module ::Rubiks
-  def self.connection
-    @connection ||= ::Rubiks::Mondrian.connection
-  end
-
   module Mondrian
     def self.connection
       @connection ||= ::Rubiks::Mondrian::Connection.create(
@@ -39,6 +35,22 @@ module ::Rubiks
           {}
         end
       end
+    end
+
+    def self.execute(query)
+      connection.execute(query)
+    end
+
+    # After the cache is flushed we must reset the connection
+    def self.flush_schema_cache
+      connection.flush_schema_cache
+    end
+
+    def self.reset_connection
+      connection.close
+      @connection = ::Rubiks::Mondrian::Connection.create(
+        config.merge(:catalog_content => ::Rubiks.schema.to_xml)
+      )
     end
   end
 end

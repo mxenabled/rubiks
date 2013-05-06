@@ -20,11 +20,16 @@ module ::Rubiks
   autoload :CalculatedMeasure, 'rubiks/calculated_measure'
 
   def self.connection
-    raise 'No connection has been specified - try requiring rubiks/mondrian'
+    Rubiks::Mondrian.connection
+  end
+
+  def self.clear_cache
+    ::Rubiks::Mondrian.flush_schema_cache
+    ::Rubiks::Mondrian.reset_connection
   end
 
   def self.execute(query)
-    connection.execute(query)
+    ::Rubiks::Mondrian.connection.execute(query)
   end
 
   def self.schema
