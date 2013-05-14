@@ -26,21 +26,21 @@
 [mondrian_schema]: http://mondrian.pentaho.com/documentation/schema.php
 [rails]: http://rubyonrails.org
 
-Rubiks is a [Online Analytical Processing](wiki_olap) ( **OLAP** ) library written in [JRuby](jruby).
-It runs on top of [Mondrian](mondrian) (an [Open-source](wiki_open_source) [OLAP](wiki_olap) server
-written in [Java](wiki_java)) and provides the ability to:
+Rubiks is a [Online Analytical Processing][wiki_olap] ( **OLAP** ) library written in [JRuby][jruby].
+It runs on top of [Mondrian][mondrian] (an [Open-source][wiki_open_source] [OLAP][wiki_olap] server
+written in [Java][wiki_java]) and provides the ability to:
 
-* define a [OLAP](wiki_olap) schema in Ruby
-* generate a [Mondrian XML schema](mondrian_schema) from this definition
-* execute [MultiDimensional eXpressions](wiki_mdx) ( **MDX** ) queries against the OLAP server
+* define a [OLAP][wiki_olap] schema in Ruby
+* generate a [Mondrian XML schema][mondrian_schema] from this definition
+* execute [MultiDimensional eXpressions][wiki_mdx] ( **MDX** ) queries against the OLAP server
 
 
 ### Assumptions
 
-* You are using [JRuby](jruby)
-* You are using [PostgreSQL](postgresql)
-* You have designed and populated your [Data Warehouse](wiki_data_warehouse) (see [Dimensional Modeling](wiki_dimensional_modeling) and [Star Schema](wiki_star_schema))
-* You are using [Ruby on Rails](rails) database naming conventions
+* You are using [JRuby][jruby]
+* You are using [PostgreSQL][postgresql]
+* You have designed and populated your [Data Warehouse][wiki_data_warehouse] (see [Dimensional Modeling][wiki_dimensional_modeling] and [Star Schema][wiki_star_schema])
+* You are using [Ruby on Rails][rails] database naming conventions
 
 
 ### Installation
