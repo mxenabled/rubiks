@@ -34,7 +34,7 @@ module ::Rubiks
       xml_attrs[:primaryKey] = 'id' unless degenerate?
       xml_attrs[:allMemberName] = all_member_name if has_all
       builder.hierarchy(xml_attrs) do
-        builder.table(:name => table) unless degenerate?
+        builder.table(:name => table_with_prefix) unless degenerate?
         levels.each{ |level| level.to_xml(builder) }
       end
     end
