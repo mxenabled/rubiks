@@ -35,4 +35,12 @@ module ::Rubiks
   def self.schema
     @schema ||= ::Rubiks::Schema.default
   end
+
+  def self.table_prefix
+    @table_prefix ||= 'view_'
+  end
+
+  def self.table_prefix=(prefix)
+    @table_prefix = prefix
+  end
 end

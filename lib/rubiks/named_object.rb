@@ -73,7 +73,7 @@ module ::Rubiks
 
     def table(new_value=nil)
       @table = new_value if new_value.present?
-      @table ||= @options[:table] || "view_#{name.tableize}"
+      @table ||= @options[:table] || "#{Rubiks.table_prefix}#{name.tableize}"
     end
 
     def to_json(options={})
