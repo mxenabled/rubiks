@@ -1,3 +1,6 @@
+## 0.1.8
+* Add table_with_prefix
+
 ## 0.1.7
 * Add table_prefix setting
 
